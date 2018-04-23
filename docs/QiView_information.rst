@@ -1,4 +1,4 @@
-.. _Qi_View_topic:
+.. _Sds_View_topic:
 
 
 Sds Views
