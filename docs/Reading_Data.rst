@@ -5,12 +5,12 @@ Reading data
 
 The REST APIs provide programmatic access to read and write data. This section identifies and describes 
 the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by  
-:ref:`Qi_View_topic`, :ref:`Qi_Filter_expressions_topic`, and :ref:`Qi_Table_format_topic`.
+:ref:`Sds_View_topic`, :ref:`Qi_Filter_expressions_topic`, and :ref:`Qi_Table_format_topic`.
 
 
 The REST APIs provide programmatic access to read and write Sds data. This section identifies and describes 
 the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by  
-:ref:`Qi_View_topic`.
+:ref:`Sds_View_topic`.
 
 If you are working in a .NET environment, convenient Sds Client libraries are available. 
 The ``ISdsDataServiceinterface``, which is accessed using the ``SdsService.GetDataService()`` helper, 
