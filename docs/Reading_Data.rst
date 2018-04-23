@@ -8,12 +8,12 @@ the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by :re
 :ref:`Qi_View_topic`, :ref:`Qi_Filter_expressions_topic`, and :ref:`Qi_Table_format_topic`.
 
 
-The REST APIs provide programmatic access to read and write Qi data. This section identifies and describes 
+The REST APIs provide programmatic access to read and write Sds data. This section identifies and describes 
 the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by :ref:`Qi_Stream_behavior_topic` 
 and :ref:`Qi_View_topic`.
 
-If you are working in a .NET environment, convenient Qi Client libraries are available. 
-The ``IQiDataServiceinterface``, which is accessed using the ``QiService.GetDataService()`` helper, 
+If you are working in a .NET environment, convenient Sds Client libraries are available. 
+The ``ISdsDataServiceinterface``, which is accessed using the ``SdsService.GetDataService()`` helper, 
 defines the functions that are available.
 
 The following methods for reading a single value are available:
@@ -52,7 +52,7 @@ All reads are HTTP GET actions. Reading data involves getting events from stream
 Response Format
 ---------------
 
-Supported response formats include json, verbose json, and Qi. 
+Supported response formats include json, verbose json, and Sds. 
 
 The default response format for is json, which is used in all examples in this document.  Default json 
 responses do not include any values that are equal to the default value for their type.
@@ -60,27 +60,27 @@ responses do not include any values that are equal to the default value for thei
 Verbose json responses include all values, including defaults, in the returned json payload. To specify 
 verbose json return, add the header ``Accept-Verbosity`` with a value of ``verbose`` to the request.  
 
-To specify Qi format, set the ``Accept`` header in the request to ``application/qi``.
+To specify Sds format, set the ``Accept`` header in the request to ``application/Sds``.
 
 Indexes and reading data
 ------------------------
 
 Most read operations take at least one index as a parameter. Indexes may be specified as strings, or, 
-when using the Qi Client libraries, the index may be passed as-is to read methods that take the index 
+when using the Sds Client libraries, the index may be passed as-is to read methods that take the index 
 type as a generic argument. Additional details about working with indexes can be found on the :ref:`Qi_Indexes_topic` page. 
 
-QiView and QiStreamBehavior
----------------------------
+SdsView and SdsStreamBehavior
+-----------------------------
 
-All reads support specifying a QiView identifier in the query string to shape the results of the read:
+All reads support specifying a SdsView identifier in the query string to shape the results of the read:
 
 ``viewId={viewId}``
 
 Working with views is covered in detail in the :ref:`Qi_View_topic` section.
 
 When data is requested at an index for which no stored event exists, the type of the index and 
-the QiStreamBehavior for the stream determine whether the result is an error, null event, interpolated event, 
-or extrapolated event. QiStreamBehavior is discussed in the Get Value, GetValues and GetWindowValues samples.
+the SdsStreamBehavior for the stream determine whether the result is an error, null event, interpolated event, 
+or extrapolated event. SdsStreamBehavior is discussed in the Get Value, GetValues and GetWindowValues samples.
 
 Filter Expressions
 ------------------
@@ -107,11 +107,11 @@ contains a column header list.
 Table formats are covered in detail in the :ref:`Qi_Table_format_topic` section.
 
 
-QiBoundaryType
+SdsBoundaryType
 --------------
 
-QiBoundaryType defines how data on the boundary of queries is handled: around the start index for range value queries, 
-and around the start and end index for window values. The following are valid values for QiBoundaryType:
+SdsBoundaryType defines how data on the boundary of queries is handled: around the start index for range value queries, 
+and around the start and end index for window values. The following are valid values for SdsBoundaryType:
 
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 | Boundary          | Enumeration value                 | Operation                                                     |
@@ -126,14 +126,14 @@ and around the start and end index for window values. The following are valid va
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 | ExactOrCalculated | 3                                 | Results include the event at the specified index boundary. If |
 |                   |                                   | no stored event exists at that index, one is calculated based |
-|                   |                                   | on the index type and QiStreamBehavior settings.              |
+|                   |                                   | on the index type and SdsStreamBehavior settings.             |
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 
-QiSearchMode
-------------
+SdsSearchMode
+-------------
 
-The QiSearchMode enum defines search behavior when seeking a stored event near a specified index. The following are 
-available QiSearchModes:
+The SdsSearchMode enum defines search behavior when seeking a stored event near a specified index. The following are 
+available SdsSearchModes:
 
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 | Mode              | Enumeration value                 | Operation                                                     |
@@ -179,7 +179,7 @@ Type with a simple index, named *Simple*:
 
   public class Simple
   {
-    [QiMember(IsKey = true, Order = 0) ]
+    [SdsMember(IsKey = true, Order = 0) ]
     public DateTime Time { get; set; }
     public State State { get; set; }
     public Double Measurement { get; set; }
@@ -249,7 +249,7 @@ Type with Compound Index, named ``DerivedCompoundIndex``
 
   public class Simple
   {
-    [QiMember(IsKey = true, Order = 0)]
+    [SdsMember(IsKey = true, Order = 0)]
     public DateTime Time { get; set; }
     public State State { get; set; }
     public Double Measurement { get; set; }
@@ -257,7 +257,7 @@ Type with Compound Index, named ``DerivedCompoundIndex``
 
   public class DerivedCompoundIndex : Simple
   {
-    [QiMember(IsKey = true, Order = 1)]
+    [SdsMember(IsKey = true, Order = 1)]
     public DateTime Recorded { get; set; }
   }
   
