@@ -72,7 +72,7 @@ The following table shows the required and optional SdsViewProperty fields.
 |                  |                         |             | from the target SdsType Properties  |
 |                  |                         |             | list                                |
 +------------------+-------------------------+-------------+-------------------------------------+
-| SdsView           | SdsView                | Optional    | Additional mapping instructions     |
+| SdsView          | SdsView                 | Optional    | Additional mapping instructions     |
 |                  |                         |             | for derived types                   |
 +------------------+-------------------------+-------------+-------------------------------------+
 
@@ -158,7 +158,7 @@ To update a Stream Type, define an SdsView and PUT the view to the following:
    api/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{streamId}/Type?viewId={viewId}
 
 
-For details, see `Sds View API`_. 
+For details, see `SdsView API`_. 
 
 Working with SdsViews when using .NET
 ------------------------------------
