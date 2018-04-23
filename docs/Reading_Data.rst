@@ -4,13 +4,13 @@ Reading data
 ============
 
 The REST APIs provide programmatic access to read and write data. This section identifies and describes 
-the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by :ref:`Qi_Stream_behavior_topic`, 
+the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by  
 :ref:`Qi_View_topic`, :ref:`Qi_Filter_expressions_topic`, and :ref:`Qi_Table_format_topic`.
 
 
 The REST APIs provide programmatic access to read and write Sds data. This section identifies and describes 
-the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by :ref:`Qi_Stream_behavior_topic` 
-and :ref:`Qi_View_topic`.
+the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by  
+:ref:`Qi_View_topic`.
 
 If you are working in a .NET environment, convenient Sds Client libraries are available. 
 The ``ISdsDataServiceinterface``, which is accessed using the ``SdsService.GetDataService()`` helper, 
@@ -67,7 +67,8 @@ Indexes and reading data
 
 Most read operations take at least one index as a parameter. Indexes may be specified as strings, or, 
 when using the Sds Client libraries, the index may be passed as-is to read methods that take the index 
-type as a generic argument. Additional details about working with indexes can be found on the :ref:`Qi_Indexes_topic` page. 
+type as a generic argument. Additional details about working with indexes can be found on the :ref:`Indexes_topic` page. 
+
 
 SdsView and SdsStreamBehavior
 -----------------------------
