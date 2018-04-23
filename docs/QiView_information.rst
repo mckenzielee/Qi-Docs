@@ -158,7 +158,7 @@ To update a Stream Type, define an SdsView and PUT the view to the following:
    api/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{streamId}/Type?viewId={viewId}
 
 
-For details, see :ref:`Qi_View_API_topic`.
+For details, see `Sds View API`_. 
 
 Working with SdsViews when using .NET
 ------------------------------------
