@@ -77,7 +77,7 @@ All reads support specifying a SdsView identifier in the query string to shape t
 
 ``viewId={viewId}``
 
-Working with views is covered in detail in the :ref:`Qi_View_topic` section.
+Working with views is covered in detail in the :ref:`Sds_View_topic` section.
 
 When data is requested at an index for which no stored event exists, the type of the index and 
 the SdsStreamBehavior for the stream determine whether the result is an error, null event, interpolated event, 
