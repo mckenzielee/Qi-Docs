@@ -20,25 +20,25 @@ OMF message types fall into three categories: Type, Container, and Data, which a
 
 * **Type messages**
 
-  A Type message is interpreted by OSIsoft Cloud Services as a QiType in the OCS Data Store. 
-  Because QiTypes are immutable, update operations are not supported. The keywords in the 
+  A Type message is interpreted by OSIsoft Cloud Services as an SdsType in the OCS Data Store. 
+  Because SdsTypes are immutable, update operations are not supported. The keywords in the 
   Type definition are interpreted as follows:
   
-  + ``id``: Corresponds to the QiType Id field. It must conform to the rules defined for a 
-    typeId specified `here <http://qi-docs.osisoft.com/en/latest/Qi_Types.html>`_
+  + ``id``: Corresponds to the SdsType Id field. It must conform to the rules defined for a 
+    typeId specified here: :ref:`QiTypes_topic`
     
   + ``classification``: Only the ``dynamic`` classification is currently supported.
-  + ``version``: Versioning of QiTypes is not supported.
-  + ``name``: Corresponds to the QiType Name field. This is the friendly name for the type.
-  + ``description``: Corresponds to the QIType Description field. 
+  + ``version``: Versioning of SdsTypes is not supported.
+  + ``name``: Corresponds to the SdsType Name field. This is the friendly name for the type.
+  + ``description``: Corresponds to the SdsType Description field. 
   + ``tags``: Currently unsupported.
   + ``metadata``: Currently unsupported.
   
-  The ``isindex`` keyword corresponds to the ``iskey`` attribute of a QiTypeProperty. 
-  QiTypes support clustered indexes which can be specified with multiple properties marked 
+  The ``isindex`` keyword corresponds to the ``iskey`` attribute of a SdsTypeProperty. 
+  SdsTypes support clustered indexes which can be specified with multiple properties marked 
   with the ``isindex`` keyword with a value of ``true``. For compound indexes, the 
   index property order within the message corresponds to the ``Order`` field of 
-  a QiTypeProperty. The ``isname`` keyword is not supported.
+  an SdsTypeProperty. The ``isname`` keyword is not supported.
 
 * **Link Type**
 
@@ -52,14 +52,14 @@ OMF message types fall into three categories: Type, Container, and Data, which a
 
   OMF supports setting the ``format`` keyword to specify how a particular JSON type should 
   be interpreted. The following is a mapping for the OCS Data Store supported 
-  types (see `QiType information <http://qi-docs.osisoft.com/en/latest/Qi_Types.html>`_)
+  types (see :ref:`QiTypes_topic`)
 
 
 ========  ===========  ============
 Type      Format       QiTypeCode
 ========  ===========  ============
-array		               IEnumerable
-boolean		             boolean
+array		           IEnumerable
+boolean		           boolean
 integer	  int64        Int64
 integer   int32        Int32
 integer   int16        Int16
@@ -78,29 +78,29 @@ string    date-time    DateTime
 Container messages
 ------------------
 
-A Container message is interpreted as a QiStream in the OCS Data Store. The keywords 
+A Container message is interpreted as a SdsStream in the OCS Data Store. The keywords 
 in the Container definition are interpreted as follows:
 
-* ``id``: Corresponds to the QiStream Id field. It must conform to the rules defined for 
-  a QiStream.Id specified `here <http://qi-docs.osisoft.com/en/latest/Qi_Streams.html>`_)
-* ``typeid``: Corresponds to the QiStream TypeId field.
-* ``typeversion``: Versioning of QiTypes is not supported.
-* ``name``: Corresponds to the QiStream Name field. This is a friendly name for the stream.
-* ``description``: Corresponds to the QiStream Description field.
-* ``tags``: Corresponds to the QiStream Tag field. 
-* ``metadata``: Corresponds to the QiStream Metadata field        
+* ``id``: Corresponds to the SdsStream Id field. It must conform to the rules defined for
+    an SdsStream.Id specified here : :ref:`Qi_Stream_API_topic`.
+* ``typeid``: Corresponds to the SdsStream TypeId field.
+* ``typeversion``: Versioning of SdsTypes is not supported.
+* ``name``: Corresponds to the SdsStream Name field. This is a friendly name for the stream.
+* ``description``: Corresponds to the SdsStream Description field.
+* ``tags``: Corresponds to the SdsStream Tag field. 
+* ``metadata``: Corresponds to the SdsStream Metadata field        
 
 
 Data messages
 -------------
 
-A Data message is mapped to generic Qi values in the OCS Data Store. The keywords in the 
+A Data message is mapped to generic Sds values in the OCS Data Store. The keywords in the 
 Data definitions are interpreted as follows:
 
 * ``typeid``: Data that is not grouped by containerId is not supported.
-* ``containerid``: Stream Id for the associated Qi Stream.
+* ``containerid``: Stream Id for the associated Sds Stream.
 * ``typeversion``: Not supported.
-* ``values``: An array of the generic Qi values.
+* ``values``: An array of the generic Sds values.
 
 
 
