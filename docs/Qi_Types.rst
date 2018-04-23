@@ -682,7 +682,7 @@ Define the SdsType as follows:
   });
 
   // Create the Simple SdsType
-  var simpleType = new SdsObjects.QiType({
+  var simpleType = new SdsObjects.SdsType({
       "Id": "Simple",
       "Name": "Simple", 
       "Description": " This is a simple Sds type ",
