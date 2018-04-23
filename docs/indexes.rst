@@ -1,4 +1,5 @@
-.. _Qi_Indexes_topic:
+.. _Indexes_topic:
+
 =======
 Indexes
 =======
