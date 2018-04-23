@@ -3,27 +3,27 @@
 Streams
 =======
 
-Qi stores collections of events and provides convenient ways to find and associating events. Events 
-of consistent structure are stored in streams, called QiStreams.  A QiType defines the structure 
-of events in a QiStream.
+Sds stores collections of events and provides convenient ways to find and associating events. Events 
+of consistent structure are stored in streams, called SdsStreams.  An SdsType defines the structure 
+of events in an SdsStream.
 
-QiStreams are referenced by their identifier or Id field. QiStream identifiers must be unique 
+SdsStreams are referenced by their identifier or Id field. SdsStream identifiers must be unique 
 within a Namespace.
 
-A QiStream must include a TypeId that references the identifier of an existing QiType. Once 
-they contain data, QiStreams are immutable. The type of the stream cannot be replaced.
+An SdsStream must include a TypeId that references the identifier of an existing SdsType. Once 
+they contain data, SdsStreams are immutable. The type of the stream cannot be replaced.
 
 Behavior determines read characteristics on the stream. If BehaviorId is omitted, the default 
 behavior mode is set to continuous and extrapolation is set to all. Set the BehaviorId field 
-to the identifier of an existing QiStreamBehavior. See 
-`QiStreamBehaviors <https://qi-docs-rst.readthedocs.org/en/latest/Qi_Stream_Behavior.html>`__ 
+to the identifier of an existing SdsStreamBehavior. See 
+`SdsStreamBehaviors <https://qi-docs-rst.readthedocs.org/en/latest/Qi_Stream_Behavior.html>`__ 
 for more information.
 
-QiStream management using the .NET Qi Client Libraries is performed through IQiMetadataService. 
-Create the IQiMetadataService, using one of the ``QiService.GetMetadataService()`` factory methods.
+SdsStream management using the .NET Sds Client Libraries is performed through ISdsMetadataService. 
+Create the ISdsMetadataService, using one of the ``SdsService.GetMetadataService()`` factory methods.
 
-The following table shows the required and optional QiStream fields. Fields not listed are reserved
-for internal Qi use. 
+The following table shows the required and optional SdsStream fields. Fields not listed are reserved
+for internal Sds use. 
 
 
 +---------------+------------------------------+-------------+----------------------------------------------+
@@ -31,21 +31,21 @@ for internal Qi use.
 +===============+==============================+=============+==============================================+
 | Id            | String                       | Required    | An identifier for referencing the stream.    |
 +---------------+------------------------------+-------------+----------------------------------------------+
-| TypeId        | String                       | Required    | The QiType identifier of the type to be      |
+| TypeId        | String                       | Required    | The SdsType identifier of the type to be      |
 |               |                              |             | used for this stream.                        |
 +---------------+------------------------------+-------------+----------------------------------------------+
 | Name          | String                       | Optional    | Friendly name                                |
 +---------------+------------------------------+-------------+----------------------------------------------+
 | Description   | String                       | Optional    | Description text                             |
 +---------------+------------------------------+-------------+----------------------------------------------+
-| BehaviorId    | String                       | Optional    | The identifier of the QiStreamBehavior for   |
+| BehaviorId    | String                       | Optional    | The identifier of the SdsStreamBehavior for   |
 |               |                              |             | this stream.                                 |
 +---------------+------------------------------+-------------+----------------------------------------------+
-| Indexes       | IList<QiStreamIndex>         | Optional    | Used to define secondary indexes for stream  |
+| Indexes       | IList<SdsStreamIndex>         | Optional    | Used to define secondary indexes for stream  |
 +---------------+------------------------------+-------------+----------------------------------------------+
 
 
-**Rules for Identifier (QiStream.Id)**
+**Rules for Identifier (SdsStream.Id)**
 
 1. Is not case sensitive.
 2. Can contain spaces.
@@ -62,26 +62,26 @@ for internal Qi use.
 Indexes
 -------
 
-The Key or Primary Index is defined at the QiType. Secondary
-Indexes are defined at the QiStream.
+The Key or Primary Index is defined at the SdsType. Secondary
+Indexes are defined at the SdsStream.
 
 Secondary Indexes are applied to a single property; there are no
-compound secondary indexes. Only QiTypeCodes
+compound secondary indexes. Only SdsTypeCodes
 that can be ordered are supported for use in a secondary index.
 
 Indexes are discussed in greater detail here: `Indexes <https://qi-docs-rst.readthedocs.org/en/latest/indexes.html>`__
 
 
 
-QiStream API
+SdsStream API
 ------------
 
 
-The REST APIs provide programmatic access to read and write Qi data. The APIs in this 
-section interact with QiStreams. When working in .NET convenient Qi Client libraries are 
-available. The ``IQiMetadataService`` interface, accessed using the ``QiService.GetMetadataService( )`` helper, 
-defines the available functions. See `QiStreams <https://qi-docs-rst.readthedocs.org/en/latest/Qi_Streams.html>`__ for general 
-QiStream information. 
+The REST APIs provide programmatic access to read and write Sds data. The APIs in this 
+section interact with SdsStreams. When working in .NET convenient Sds Client libraries are 
+available. The ``ISdsMetadataService`` interface, accessed using the ``SdsService.GetMetadataService( )`` helper, 
+defines the available functions. See `SdsStreams <https://qi-docs-rst.readthedocs.org/en/latest/Qi_Streams.html>`__ for general 
+SdsStream information. 
 
 
 ***********************
@@ -116,7 +116,7 @@ Returns the specified stream.
 
 **Response body**
 
-  The requested QiStream.
+  The requested SdsStream.
 
   Sample response body:
 
@@ -136,7 +136,7 @@ Returns the specified stream.
 
 ::
 
-  Task<QiStream> GetStreamAsync(string streamId);
+  Task<SdsStream> GetStreamAsync(string streamId);
 
 
 **Security**
@@ -153,7 +153,7 @@ Returns a list of streams.
 
 If the optional search parameter is specified, the list of streams returned are filtered to match 
 the search criteria. If the optional search parameter is not specified, the list includes all streams 
-in the Namespace. See `Searching for QiStreams <https://qi-docs-rst.readthedocs.org/en/latest/Searching.html>`__ 
+in the Namespace. See `Searching for SdsStreams <https://qi-docs-rst.readthedocs.org/en/latest/Searching.html>`__ 
 for information about specifying the search parameter.
 
 **Request**
@@ -174,13 +174,13 @@ for information about specifying the search parameter.
   The namespace identifier
 ``string query``
   An optional parameter representing a string search. 
-  See `Searching for QiStreams <https://qi-docs-rst.readthedocs.org/en/latest/Searching.html>`__ 
+  See `Searching for SdsStreams <https://qi-docs-rst.readthedocs.org/en/latest/Searching.html>`__ 
   for information about specifying the search parameter.
 ``int skip``
-  An optional parameter representing the zero-based offset of the first QiStream to retrieve. 
+  An optional parameter representing the zero-based offset of the first SdsStream to retrieve. 
   If not specified, a default value of 0 is used.
 ``int count``
-  An optional parameter representing the maximum number of QiStreams to retrieve. 
+  An optional parameter representing the maximum number of SdsStreams to retrieve. 
   If not specified, a default value of 100 is used.
 
 
@@ -191,7 +191,7 @@ for information about specifying the search parameter.
 
 **Response body**
 
-  A collection of zero or more QiStreams.
+  A collection of zero or more SdsStreams.
   
   Sample response body:
 
@@ -210,7 +210,7 @@ for information about specifying the search parameter.
         "TypeId":"Simple",
         "Indexes":[  
            {  
-              "QiTypePropertyId":"Measurement"
+              "SdsTypePropertyId":"Measurement"
            }
         ]
      },
@@ -226,7 +226,7 @@ for information about specifying the search parameter.
 
 ::
 
-  Task<IEnumerable<QiStream>> GetStreamsAsync(string query = "", int skip = 0, 
+  Task<IEnumerable<SdsStream>> GetStreamsAsync(string query = "", int skip = 0, 
       int count = 100);
 
 
@@ -266,14 +266,14 @@ Returns the type definition that is associated with a given stream.
 
 **Response body**
 
-  The requested QiType.
+  The requested SdsType.
 
 
 **.NET Library**
 
 ::
 
-  Task<QiType> GetStreamTypeAsync(string streamId);
+  Task<SdsType> GetStreamTypeAsync(string streamId);
 
 
 **Security**
@@ -286,7 +286,7 @@ Returns the type definition that is associated with a given stream.
 ``Create Stream``
 -----------------
 
-Creates the specified stream. If a stream with a matching identifier already exists, Qi compares the 
+Creates the specified stream. If a stream with a matching identifier already exists, Sds compares the 
 existing stream with the stream that was sent. If the streams are identical, a ``Found`` (302) error 
 is returned with the Location header set to the URI where the stream may be retrieved using a Get function. 
 If the streams do not match, a ``Conflict`` (409) error is returned.
@@ -295,7 +295,7 @@ For a matching stream (Found), clients that are capable of performing a redirect
 authorization header can automatically redirect to retrieve the stream. However, most clients, 
 including the .NET HttpClient, consider redirecting with the authorization token to be a security vulnerability.
 
-When a client performs a redirect and strips the authorization header, Qi cannot authorize the request and 
+When a client performs a redirect and strips the authorization header, Sds cannot authorize the request and 
 returns ``Unauthorized`` (401). For this reason, it is recommended that when using clients that do not 
 redirect with the authorization header, you should disable automatic redirect.
 
@@ -315,7 +315,7 @@ redirect with the authorization header, you should disable automatic redirect.
   The namespace identifier
 ``string streamId``
   The stream identifier. The stream identifier must match the identifier in content. 
-  The request content is the serialized QiStream.
+  The request content is the serialized SdsStream.
 
 **Response**
 
@@ -324,14 +324,14 @@ redirect with the authorization header, you should disable automatic redirect.
 
 **Response body**
 
-  The newly created QiStream.
+  The newly created SdsStream.
   
 
 **.NET Library**
 
 ::
 
-  Task<QiStream> GetOrCreateStreamAsync(QiStream qiStream);
+  Task<SdsStream> GetOrCreateStreamAsync(SdsStream SdsStream);
 
 
 If a stream with a matching identifier already exists and it matches the stream in the request body, 
@@ -375,7 +375,7 @@ Unpermitted changes result in an error.
 ``string streamId``
   The stream identifier to be updated
 
-The request content is the serialized QiStream.
+The request content is the serialized SdsStream.
 
 
 **Response**
@@ -387,7 +387,7 @@ The request content is the serialized QiStream.
 
 ::
 
-  Task CreateOrUpdateStreamAsync(QiStream qiStream);
+  Task CreateOrUpdateStreamAsync(SdsStream SdsStream);
 
 
 **Security**
