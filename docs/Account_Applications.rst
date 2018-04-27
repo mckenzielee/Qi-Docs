@@ -30,13 +30,27 @@ Create a :ref:`ClientApiKeySet <ClientApiKeySetObj>` for the specified applicati
 	The created :ref:`ClientApiKeySet <ClientApiKeySetObj>`
 
 **Notes**
-	For HTTP requests and responses, the JSON serialized ClientApiKeySet object Looks like:
+	For HTTP requests and responses, the ClientApiKeySet object has the following properties and JSON-serialized body: 
 
 .. _ClientApiKeySetObj: 
+
+``String AppUri``
+	App ID URI.
+``Boolean CreateFirstKey``
+	Create the first key in the Client API Key Set.
+``String DisplayName``
+	Display name.
+``IDictionary`2 RequiredResource``
+	List of required resources.
+``String TenantId``
+	Tenant Id.
 
 .. highlight:: C#
 
 ::
+
+	HTTP/1.1 200
+	Content-Type: application/json
 
  {
 	"AppUri": "appuri",
@@ -77,13 +91,21 @@ Get the :ref:`ClientApiKeyCollection <ClientApiKeyCollectionObj>` for the specif
 	:ref:`ClientApiKeyCollection <ClientApiKeyCollectionObj>` for the specified applicaiton.
 
 **Notes**
-	For HTTP requests and responses, the JSON serialized ClientApiKeyCollection object Looks like:
+	For HTTP requests and responses, the ClientApiKeyCollection object has the following properties and JSON-serialized body: 
 
 .. _ClientApiKeyCollectionObj: 
+
+``String Id``
+	Gets the identifier for this collection of API access keys, a GUID.
+``List`1 Keys``
+	Gets a list of the application's access keys.
 
 .. highlight:: C#
 
 ::
+
+	HTTP/1.1 200
+	Content-Type: application/json
 
  {
 	"Id": "id",
@@ -121,6 +143,98 @@ Delete a specified :ref:`ClientApiKeySet <ClientApiKeySetObj>`.
 
 **Returns**
 	HTTP status code - 200 OK if the :ref:`ClientApiKeySet <ClientApiKeySetObj>` was deleted.
+
+
+
+|
+
+**********************
+
+``GetExternalApplicationsAsync()``
+--------------------------------------------------------------------
+
+Lists all applications from a customer's directory
+
+**Http**
+
+::
+
+	GET api/Tenants/{tenantId}/externalapplications
+
+**Parameters**
+
+``String tenantId``
+	ID of the tenant the application belongs to
+``String skip``
+	Number of applications to skip for paging purposes.
+``String count``
+	>Maximum number of applications to return in this page.
+``String query``
+	Prefix match to filter applications by applicationId or display name
+
+**Security**
+	Allowed by Account Administrator :ref:`Role <RoleObj>`
+
+**Returns**
+	An array of :ref:`Application <ApplicationObj>` objects that could be added to this account.
+
+**Notes**
+	For HTTP requests and responses, the Application object has the following properties and JSON-serialized body: 
+
+.. _ApplicationObj: 
+
+``String Id``
+	Application Identifier
+``String TenantId``
+	Tenant Id
+``String Name``
+	Application Display Name
+``IEnumerable`1 Roles``
+	List of roles for the application
+
+.. highlight:: C#
+
+::
+
+	HTTP/1.1 200
+	Content-Type: application/json
+
+ {
+	"Id": "id",
+	"TenantId": "tenantid",
+	"Name": "name",
+	"Roles": []
+ }
+
+
+
+|
+
+**********************
+
+``RegisterClientApplicationAsync()``
+--------------------------------------------------------------------
+
+Registers the application with cloud services
+
+**Http**
+
+::
+
+	POST api/Tenants/{tenantId}/Applications
+
+**Parameters**
+
+``String tenantId``
+	ID of the tenant the application belongs to
+``Application application``
+	:ref:`Application <ApplicationObj>` object with required properties.
+
+**Security**
+	Account admin or Cluster operator
+
+**Returns**
+	The :ref:`Application <ApplicationObj>` for a tenant
 
 
 
