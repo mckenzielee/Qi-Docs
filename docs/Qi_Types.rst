@@ -376,7 +376,7 @@ are not included are reserved for internal Sds use.
 |                           |                         |             | compound index. Also used              |
 |                           |                         |             | internally                             |
 +---------------------------+-------------------------+-------------+----------------------------------------+
-| InterpolationModeOverride	| SdsInterpolationMode    | Optional    | Interpolation setting of the property. |
+| InterpolationModeOverride | SdsInterpolationMode    | Optional    | Interpolation setting of the property. |
 |                           |                         |             | Default is null.                       |
 +---------------------------+-------------------------+-------------+----------------------------------------+
 | Uom                       | String                  | Optional    | Unit of Measure of the property.       |
