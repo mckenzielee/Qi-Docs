@@ -4,13 +4,8 @@ Reading data
 ============
 
 The REST APIs provide programmatic access to read and write data. This section identifies and describes 
-the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by  
+the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by :ref:`QiType_topic`,  
 :ref:`Sds_View_topic`, :ref:`Qi_Filter_expressions_topic`, and :ref:`Qi_Table_format_topic`.
-
-
-The REST APIs provide programmatic access to read and write Sds data. This section identifies and describes 
-the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by  
-:ref:`Sds_View_topic`.
 
 If you are working in a .NET environment, convenient Sds Client libraries are available. 
 The ``ISdsDataServiceinterface``, which is accessed using the ``SdsService.GetDataService()`` helper, 
@@ -70,8 +65,8 @@ when using the Sds Client libraries, the index may be passed as-is to read metho
 type as a generic argument. Additional details about working with indexes can be found on the :ref:`Indexes_topic` page. 
 
 
-SdsView and SdsStreamBehavior
------------------------------
+SdsView and reading data
+------------------------
 
 All reads support specifying a SdsView identifier in the query string to shape the results of the read:
 
@@ -80,8 +75,9 @@ All reads support specifying a SdsView identifier in the query string to shape t
 Working with views is covered in detail in the :ref:`Sds_View_topic` section.
 
 When data is requested at an index for which no stored event exists, the type of the index and 
-the SdsStreamBehavior for the stream determine whether the result is an error, null event, interpolated event, 
-or extrapolated event. SdsStreamBehavior is discussed in the Get Value, GetValues and GetWindowValues samples.
+the interpolation and extrapolation characteristics defined by the target type of the SdsView 
+determine whether the result is an error, null event, interpolated event, or extrapolated event. 
+The read characteristics are discussed in the *Get Value*, *GetValues* and *GetWindowValues* code samples.
 
 Filter Expressions
 ------------------
