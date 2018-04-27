@@ -6,7 +6,8 @@ Types
 
 The Sequential Data Store (SDS) stores streams of events and provides convenient ways to find and associate 
 events. Events are stored in streams, called SdsStreams. An SdsType defines the shape or structure of the 
-event in an SdsStream.
+event and how to associate events within the SdsStream.
+
 
 .. contents:: Topics in this section:
     :depth: 2
@@ -25,8 +26,13 @@ Indexes are discussed in greater detail here: :doc:`indexes`
 
 An SdsType is referenced by its identifier or Id field. SdsType identifiers must be unique within a Namespace.
 
-SdsTypes are immutable; after an SdsType is created it cannot be changed, and it can only be deleted if 
-no streams reference it.
+SdsTypes define how events are associated and read within a collection of events, or SdsStream. The read 
+characteristics when attempting to read non-existent indexes, indexes that fall between, before or after 
+existing indexes, are determined by the interpolation and extrapolation settings of the SdsType. For more 
+information about read characteristics see [Add link for Interpolation] and [Add link for Extrapolation].
+
+SdsTypes are immutable; after an SdsType is referenced by an SdsStream or an SdsView, it cannot be changed. 
+Types can be deleted only if no streams or views reference it.
 
 SdsType management using the .NET Sds Client Libraries is performed through the ``ISdsMetadataService``. 
 You can create the ISdsMetadataService using one of the ``SdsService.GetMetadataService()`` factory methods.
@@ -40,29 +46,38 @@ discussed in greater detail below.
 The following table shows the required and optional SdsType fields. Fields that are not included are reserved for internal Sds use.
 
 
-+------------------+-------------------------+-------------+-------------------------------------+
-| Property         | Type                    | Optionality | Details                             |
-+==================+=========================+=============+=====================================+
-| Id               | String                  | Required    | Identifier for referencing the type |
-+------------------+-------------------------+-------------+-------------------------------------+
-| Name             | String                  | Optional    | Friendly name                       |
-+------------------+-------------------------+-------------+-------------------------------------+
-| Description      | String                  | Optional    | Description text                    |
-+------------------+-------------------------+-------------+-------------------------------------+
-| SdsTypeCode      | SdsTypeCode             | Required    | Numeric code identifying the base   |
-|                  |                         |             | SdsType                             |
-+------------------+-------------------------+-------------+-------------------------------------+
-| BaseType         | SdsType                 | Optional    | SdsType the class derives from      |
-+------------------+-------------------------+-------------+-------------------------------------+
-| IsGenericType    | Boolean                 |             | Identifies the type as a generic    |
-|                  |                         |             | (or Template in C++), containing    |
-|                  |                         |             | one or more type argument.          |
-+------------------+-------------------------+-------------+-------------------------------------+
-| GenericArguments | IList<SdsType>          | Optional    | List of type arguments satisfying   |
-|                  |                         |             | the generic                         |
-+------------------+-------------------------+-------------+-------------------------------------+
-| Properties       | IList<SdsTypeProperty>  | Required    | List of SdsTypeProperty items       |
-+------------------+-------------------------+-------------+-------------------------------------+
++-------------------+-------------------------+-------------+-------------------------------------+
+| Property          | Type                    | Optionality | Details                             |
++===================+=========================+=============+=====================================+
+| Id                | String                  | Required    | Identifier for referencing the type |
++-------------------+-------------------------+-------------+-------------------------------------+
+| Name              | String                  | Optional    | Friendly name                       |
++-------------------+-------------------------+-------------+-------------------------------------+
+| Description       | String                  | Optional    | Description text                    |
++-------------------+-------------------------+-------------+-------------------------------------+
+| SdsTypeCode       | SdsTypeCode             | Required    | Numeric code identifying the base   |
+|                   |                         |             | SdsType                             |
++-------------------+-------------------------+-------------+-------------------------------------+
+| BaseType          | SdsType                 | Optional    | SdsType the class derives from      |
++-------------------+-------------------------+-------------+-------------------------------------+
+| IsGenericType     | Boolean                 |             | Identifies the type as a generic    |
+|                   |                         |             | (or Template in C++), containing    |
+|                   |                         |             | one or more type argument.          |
++-------------------+-------------------------+-------------+-------------------------------------+
+| GenericArguments  | IList<SdsType>          | Optional    | List of type arguments satisfying   |
+|                   |                         |             | the generic                         |
++-------------------+-------------------------+-------------+-------------------------------------+
+| Properties        | IList<SdsTypeProperty>  | Required    | List of SdsTypeProperty items       |
++-------------------+-------------------------+-------------+-------------------------------------+
+| InterpolationMode | SdsInterpolationMode    | Optional    | Interpolation setting of the type.  |
+|                   |                         |             | Default is Continuous.              |
++-------------------+-------------------------+-------------+-------------------------------------+
+| ExtrapolationMode | SdsExtrapolationMode    | Optional    | Extrapolation setting of the type.  |
+|                   |                         |             | Default is All.                     |
++-------------------+-------------------------+-------------+-------------------------------------+
+
+
+
 
 
 **Rules for typeId**
@@ -190,6 +205,143 @@ UInt64Enum               612
 Version                  22
 VersionArray             222
 =======================  =====
+
+
+Interpolation
+-------------
+
+Interpolation determines how a stream behaves when asked to return an event at an index between 
+two existing events. ``InterpolationMode`` determines how the returned event is constructed. The table 
+below lists InterpolationModes:
+
++---------------------------+--------------------------------+--------------------------------------------------+
+|Mode                       |Enumeration value               |Operation                                         |
++===========================+================================+==================================================+
+|Default                    |0                               |The default InterpolationMode is Continuous       |
++---------------------------+--------------------------------+--------------------------------------------------+
+|Continuous                 |0                               |Interpolates the data using previous and next     |
+|                           |                                |index values                                      |
++---------------------------+--------------------------------+--------------------------------------------------+
+|StepwiseContinuousLeading  |1                               |Returns the data from the previous index          |
++---------------------------+--------------------------------+--------------------------------------------------+
+|StepwiseContinuousTrailing |2                               |Returns the data from the next index              |
++---------------------------+--------------------------------+--------------------------------------------------+
+|Discrete                   |3                               |Returns ‘null’                                    |
++---------------------------+--------------------------------+--------------------------------------------------+
+
+Note that ``Continuous`` cannot return events for values that cannot be interpolated, such as when the type is not numeric.
+
+The table below describes how the **Continuous InterpolationMode** affects
+indexes that occur between data in a stream:
+
+**InterpolationMode = Continuous or Default**
+
++---------------------------+--------------------------------+--------------------------------------------------+
+|Type                       |Result for an index between     |Comment                                           |
+|                           |data in a stream                |                                                  |
++===========================+================================+==================================================+
+|Numeric Types              |Interpolated*                   |Rounding is done as needed for integer types      |
++---------------------------+--------------------------------+--------------------------------------------------+
+|Time related Types         |Interpolated                    |DateTime, DateTimeOffset, TimeSpan                |
++---------------------------+--------------------------------+--------------------------------------------------+
+|Nullable Types             |Returns ‘null’                  |Cannot reliably interpolate due to possibility of |
+|                           |                                |a null value                                      |
++---------------------------+--------------------------------+--------------------------------------------------+
+|Array and List Types       |Returns ‘null’                  |                                                  |
++---------------------------+--------------------------------+--------------------------------------------------+
+|String Type                |Returns ‘null’                  |                                                  |
++---------------------------+--------------------------------+--------------------------------------------------+
+|Boolean Type               |Returns value of nearest index  |                                                  |
++---------------------------+--------------------------------+--------------------------------------------------+
+|Enumeration Types          |Returns Enum value at 0         |This may have a value for the enumeration         |
++---------------------------+--------------------------------+--------------------------------------------------+
+|GUID                       |                                |                                                  |
++---------------------------+--------------------------------+--------------------------------------------------+
+|Version                    |Returns ‘null’                  |                                                  |
++---------------------------+--------------------------------+--------------------------------------------------+
+|IDictionary or IEnumerable |Returns ‘null’                  |Dictionary, Array, List, and so on.               |
++---------------------------+--------------------------------+--------------------------------------------------+
+
+\*When extreme values are involved in an interpolation (for example
+Decimal.MaxValue) the call might result in a BadRequest exception.
+
+If the InterpolationMode is not assigned, the events are interpolated in the default manner, unless the interpolation 
+mode is overridden in the TypeProperty or the SdsStream. For more information on overriding the interpolation mode 
+on a specific type property see [Add link for SdsTypeProperty]. For more information on override the interpolation 
+mode for on a type property for a specific stream see [Add link for SdsStream PropertyOverrides].
+
+Extrapolation
+-------------
+
+Extrapolation defines how a stream responds to requests with indexes that precede or follow all 
+data in the steam. ExtrapolationMode acts as a master switch to determine whether extrapolation 
+occurs and at which end of the data. 
+
+ExtrapolationMode works with the InterpolationMode to determine how a stream responds. The following tables 
+show how ExtrapolationMode affects returned values for each InterpolationMode value:
+
+**ExtrapolationMode with Mode\ =Default or Continuous**
+
++---------------------+---------------------+----------------------------+---------------------------+
+| ExtrapolationMode   | Enumeration value   | Index before data          | Index after data          |
++=====================+=====================+============================+===========================+
+| All                 | 0                   | Returns first data value   | Returns last data value   |
++---------------------+---------------------+----------------------------+---------------------------+
+| None                | 1                   | Return null                | Return null               |
++---------------------+---------------------+----------------------------+---------------------------+
+| Forward             | 2                   | Returns first data value   | Return null               |
++---------------------+---------------------+----------------------------+---------------------------+
+| Backward            | 3                   | Return null                | Returns last data value   |
++---------------------+---------------------+----------------------------+---------------------------+
+
+**ExtrapolationMode with InterpolationMode\ =Discrete**
+
++---------------------+---------------------+---------------------+--------------------+
+| ExtrapolationMode   | Enumeration value   | Index before data   | Index after data   |
++=====================+=====================+=====================+====================+
+| All                 | 0                   | Return null         | Return null        |
++---------------------+---------------------+---------------------+--------------------+
+| None                | 1                   | Return null         | Return null        |
++---------------------+---------------------+---------------------+--------------------+
+| Forward             | 2                   | Return null         | Return null        |
++---------------------+---------------------+---------------------+--------------------+
+| Backward            | 3                   | Return null         | Return null        |
++---------------------+---------------------+---------------------+--------------------+
+
+**ExtrapolationMode with InterpolationMode\ =StepwiseContinuousLeading**
+
++---------------------+---------------------+----------------------------+---------------------------+
+| ExtrapolationMode   | Enumeration value   | Index before data          | Index after data          |
++=====================+=====================+============================+===========================+
+| All                 | 0                   | Returns first data value   | Returns last data value   |
++---------------------+---------------------+----------------------------+---------------------------+
+| None                | 1                   | Return null                | Return null               |
++---------------------+---------------------+----------------------------+---------------------------+
+| Forward             | 2                   | Returns first data value   | Return null               |
++---------------------+---------------------+----------------------------+---------------------------+
+| Backward            | 3                   | Return null                | Returns last data value   |
++---------------------+---------------------+----------------------------+---------------------------+
+
+**ExtrapolationMode with InterpolationMode\ =StepwiseContinuousTrailing**
+
++---------------------+---------------------+----------------------------+---------------------------+
+| ExtrapolationMode   | Enumeration value   | Index before data          | Index after data          |
++=====================+=====================+============================+===========================+
+| All                 | 0                   | Returns first data value   | Returns last data value   |
++---------------------+---------------------+----------------------------+---------------------------+
+| None                | 1                   | Return null                | Return null               |
++---------------------+---------------------+----------------------------+---------------------------+
+| Forward             | 2                   | Returns first data value   | Return null               |
++---------------------+---------------------+----------------------------+---------------------------+
+| Backward            | 3                   | Return null                | Returns last data value   |
++---------------------+---------------------+----------------------------+---------------------------+
+
+For additional information about the effect of stream behaviors, see the
+documentation on the `read
+method <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html>`__
+you are using.
+
+If the ExtrapolationMode is not assigned, the events are extrapolated in the default manner.
 
 
 
