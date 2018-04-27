@@ -123,7 +123,8 @@ and around the start and end index for window values. The following are valid va
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 | ExactOrCalculated | 3                                 | Results include the event at the specified index boundary. If |
 |                   |                                   | no stored event exists at that index, one is calculated based |
-|                   |                                   | on the index type and SdsStreamBehavior settings.             |
+|                   |                                   | on the index type and interpolation and extrapolation         |
+|                   |                                   | settings.                                                     |
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 
 SdsSearchMode
