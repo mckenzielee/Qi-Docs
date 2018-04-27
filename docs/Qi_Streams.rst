@@ -10,14 +10,8 @@ of events in an SdsStream.
 SdsStreams are referenced by their identifier or Id field. SdsStream identifiers must be unique 
 within a Namespace.
 
-An SdsStream must include a TypeId that references the identifier of an existing SdsType. Once 
-they contain data, SdsStreams are immutable. The type of the stream cannot be replaced.
-
-Behavior determines read characteristics on the stream. If BehaviorId is omitted, the default 
-behavior mode is set to continuous and extrapolation is set to all. Set the BehaviorId field 
-to the identifier of an existing SdsStreamBehavior. See 
-`SdsStreamBehaviors <https://qi-docs-rst.readthedocs.org/en/latest/Qi_Stream_Behavior.html>`__ 
-for more information.
+An SdsStream must include a TypeId that references the identifier of an existing SdsType. 
+When an SdsStream contains data, you must use a view to update the stream type.
 
 SdsStream management using the .NET Sds Client Libraries is performed through ISdsMetadataService. 
 Create the ISdsMetadataService, using one of the ``SdsService.GetMetadataService()`` factory methods.
@@ -26,23 +20,23 @@ The following table shows the required and optional SdsStream fields. Fields not
 for internal Sds use. 
 
 
-+---------------+------------------------------+-------------+----------------------------------------------+
-| Property      | Type                         | Optionality |Details                                       |
-+===============+==============================+=============+==============================================+
-| Id            | String                       | Required    | An identifier for referencing the stream.    |
-+---------------+------------------------------+-------------+----------------------------------------------+
-| TypeId        | String                       | Required    | The SdsType identifier of the type to be      |
-|               |                              |             | used for this stream.                        |
-+---------------+------------------------------+-------------+----------------------------------------------+
-| Name          | String                       | Optional    | Friendly name                                |
-+---------------+------------------------------+-------------+----------------------------------------------+
-| Description   | String                       | Optional    | Description text                             |
-+---------------+------------------------------+-------------+----------------------------------------------+
-| BehaviorId    | String                       | Optional    | The identifier of the SdsStreamBehavior for   |
-|               |                              |             | this stream.                                 |
-+---------------+------------------------------+-------------+----------------------------------------------+
-| Indexes       | IList<SdsStreamIndex>         | Optional    | Used to define secondary indexes for stream  |
-+---------------+------------------------------+-------------+----------------------------------------------+
++-------------------+----------------------------------+-------------+----------------------------------------------+
+| Property          | Type                             | Optionality |Details                                       |
++===================+==================================+=============+==============================================+
+| Id                | String                           | Required    | An identifier for referencing the stream.    |
++-------------------+----------------------------------+-------------+----------------------------------------------+
+| TypeId            | String                           | Required    | The SdsType identifier of the type to be     |
+|                   |                                  |             | used for this stream.                        |
++-------------------+----------------------------------+-------------+----------------------------------------------+
+| Name              | String                           | Optional    | Friendly name                                |
++-------------------+----------------------------------+-------------+----------------------------------------------+
+| Description       | String                           | Optional    | Description text                             |
++-------------------+----------------------------------+-------------+----------------------------------------------+
+| Indexes           | IList<SdsStreamIndex>            | Optional    | Used to define secondary indexes for stream  |
++-------------------+----------------------------------+-------------+----------------------------------------------+
+| PropertyOverrides | IList<SdsStreamPropertyOverride> | Optional    | Used to define unit of measure and           |
+|                   |                                  |             | interpolation mode overrides for a stream    |
++-------------------+----------------------------------+-------------+----------------------------------------------+
 
 
 **Rules for Identifier (SdsStream.Id)**
@@ -71,6 +65,35 @@ that can be ordered are supported for use in a secondary index.
 
 Indexes are discussed in greater detail here: `Indexes <https://qi-docs-rst.readthedocs.org/en/latest/indexes.html>`__
 
+PropertyOverrides
+-----------------
+
+PropertyOverrides provide a way to override interpolation behavior and unit of measure for individual 
+SdsType properties for a specific stream.
+
+The ``SdsStreamPropertyOverride`` object has the following structure:
+
+
++-------------------+--------------------------------+-------------+---------------------------------------------------+
+| Property          | Type                           | Optionality | Details                                           |
++===================+================================+=============+===================================================+
+| SdsTypePropertyId | String                         | Required    | SdsTypeProperty identifier                        |
++-------------------+--------------------------------+-------------+---------------------------------------------------+
+| InterpolstionMode | SdsInterpolationMode           | Optional    | Interpolation setting. Default is null            |
++-------------------+--------------------------------+-------------+---------------------------------------------------+
+| UomOverride       | String                         | Optional    | Unit of measure                                   |
++-------------------+--------------------------------+-------------+---------------------------------------------------+
+
+The unit of measure can be overridden for any type property defined by the stream type, including primary keys 
+and secondary indexes. For more information about type property units of measure see SdsType. 
+
+Read characteristics of the stream are determined by the type and the PropertyOverrides of the stream. The 
+interpolation mode for non-index properties can be defined and overridden at the stream level. For more 
+information about type read characteristics see SdsType.
+
+When specifying interpolation overrides, if the SdsType InterpolationMode is Discrete, it cannot be overridden 
+at any level. When InterpolationMode is set to Discrete and an event it not defined for that index, a null 
+value is returned for the entire event.
 
 
 SdsStream API
@@ -353,8 +376,8 @@ Creates the specified stream. If a stream with the same Id already exists, the d
 The following changes are permitted:
 
 •	Name
-•	BehaviorId
 •	Description
+•  PropertyOverrides
 
 Unpermitted changes result in an error.
 
@@ -401,6 +424,7 @@ The request content is the serialized SdsStream.
 --------------
 
 Updates a stream’s type. The type is modified to match the specified view. 
+Defined Indexes and PropertyOverrides are removed when updating a stream type.
 
 
 **Request**
