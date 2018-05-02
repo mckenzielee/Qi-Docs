@@ -32,7 +32,7 @@ existing indexes, are determined by the interpolation and extrapolation settings
 information about read characteristics see [Add link for Interpolation] and [Add link for Extrapolation].
 
 SdsTypes are immutable; after an SdsType is referenced by an SdsStream or an SdsView, it cannot be changed. 
-Types can be deleted only if no streams or views reference it.
+An SdsType can be deleted only if no SdsStreams or SdsViews reference it.
 
 SdsType management using the .NET Sds Client Libraries is performed through the ``ISdsMetadataService``. 
 You can create the ISdsMetadataService using one of the ``SdsService.GetMetadataService()`` factory methods.
@@ -265,10 +265,10 @@ indexes that occur between data in a stream:
 \*When extreme values are involved in an interpolation (for example
 Decimal.MaxValue) the call might result in a BadRequest exception.
 
-If the InterpolationMode is not assigned, the events are interpolated in the default manner, unless the interpolation 
-mode is overridden in the TypeProperty or the SdsStream. For more information on overriding the interpolation mode 
-on a specific type property see [Add link for SdsTypeProperty]. For more information on override the interpolation 
-mode for on a type property for a specific stream see [Add link for SdsStream PropertyOverrides].
+If the InterpolationMode is not assigned or overridden, the events are interpolated in the default manner. The 
+InterpolationMode can be overridden in the TypeProperty or the SdsStream. For more information on overriding the 
+interpolation mode on a specific type property, see `SdsTypeProperty <https://github.com/osisoft/Qi-Docs/blob/Doc_edits/docs/Qi_Types.rst#id9>`__. For more information on 
+overriding the interpolation mode for a type property for a specific stream, see SdsStream `PropertyOverrides <https://github.com/osisoft/Qi-Docs/blob/Doc_edits/docs/Qi_Streams.rst#propertyoverrides>`__.
 
 Extrapolation
 -------------
@@ -336,12 +336,12 @@ show how ExtrapolationMode affects returned values for each InterpolationMode va
 | Backward            | 3                   | Return null                | Returns last data value   |
 +---------------------+---------------------+----------------------------+---------------------------+
 
-For additional information about the effect of stream behaviors, see the
+If the ExtrapolationMode is not assigned, the events are extrapolated in the default manner.
+
+For additional information about the effect of interpolation and extrapolation modes, see the
 documentation on the `read
 method <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html>`__
 you are using.
-
-If the ExtrapolationMode is not assigned, the events are extrapolated in the default manner.
 
 
 
@@ -400,7 +400,7 @@ that is not part of the Index. If the InterpolationModeOverride is not set, the 
 in the manner defined by the SdsType’s IntepolationMode.
 
 An SdsType with the InterpolationMode set to Discrete cannot have a Property with an InteroplationModeOverride. 
-For more information on interpolation of events see [Add link for Interpolation].
+For more information on how events are interpolated, see `Interpolation <https://github.com/osisoft/Qi-Docs/blob/Doc_edits/docs/Qi_Types.rst#id5>`__.
 
 Uom is the unit of measure for the Property. The Uom of a Property may be specified by the name or the 
 abbreviation. The names and abbreviations of Uoms are case sensitive. 
@@ -477,7 +477,7 @@ The following unit of measures are supported for an SdsTypeProperty:
 +--------------------------------------------------+--------------+
 | cubic meter per second                           | m3/s         |
 +--------------------------------------------------+--------------+
-| ay                                               | d            |
+| day                                              | d            |
 +--------------------------------------------------+--------------+
 | degree                                           | °            |
 +--------------------------------------------------+--------------+
