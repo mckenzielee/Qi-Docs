@@ -79,7 +79,7 @@ You can specify search operators in the ``searchText`` string to return more spe
 =======  ==================================================================
 ``AND``  AND operator. For example, ``"cat AND dog"`` searches for streams
          containing both "cat" and "dog".  AND must be in all caps.
-``OR``   OR operator. For example, ``"cat OR dog"`` searches for documents
+``OR``   OR operator. For example, ``"cat OR dog"`` searches for streams
          containing either "cat" or "dog" or both.  OR must be in all caps.
 ``NOT``  NOT operator. For example, ``"cat NOT dog"`` searches for streams 
          that have the "cat" term or do not have "dog".  NOT must be in
@@ -91,12 +91,12 @@ You can specify search operators in the ``searchText`` string to return more spe
          search on other fields like ``name`` or ``description``.  *Note
          that field names are camel case and are case sensitive.*
 ``" "``  Phrase search operator. For example, while ``Roach Motel`` 
-         (without quotes) would search for documents containing 
+         (without quotes) would search for streams containing 
          Roach Motel anywhere in any order, ``"Roach Motel"`` 
          (with quotes) will only match documents that contain the 
          whole phrase together and in that order.
 ``( )``  Precedence operator. For example, ``motel AND (wifi OR luxury)`` 
-         searches for documents containing the motel term and 
+         searches for streams containing the motel term and 
          either wifi or luxury (or both).
 =======  ==================================================================
 
