@@ -34,16 +34,16 @@ information about read characteristics see [Add link for Interpolation] and [Add
 SdsTypes are immutable; after an SdsType is referenced by an SdsStream or an SdsView, it cannot be changed. 
 An SdsType can be deleted only if no SdsStreams or SdsViews reference it.
 
-SdsType management using the .NET Sds Client Libraries is performed through the ``ISdsMetadataService``. 
+SdsType management using the .NET SDS Client Libraries is performed through the ``ISdsMetadataService``. 
 You can create the ISdsMetadataService using one of the ``SdsService.GetMetadataService()`` factory methods.
 
 Only SdsTypes used to define SdsStreams need to be added to the Sequential data store. SdsTypes that define Properties or base types 
-are contained within the parent SdsType and do not need to be added to Sds independently.
+are contained within the parent SdsType and do not need to be added to SDS independently.
 
 The .NET libraries provide SdsTypeBuilder to help build SdsTypes from .NET types. SdsTypeBuilder is 
 discussed in greater detail below.
 
-The following table shows the required and optional SdsType fields. Fields that are not included are reserved for internal Sds use.
+The following table shows the required and optional SdsType fields. Fields that are not included are reserved for internal SDS use.
 
 
 +-------------------+-------------------------+-------------+-------------------------------------+
@@ -95,7 +95,7 @@ The following table shows the required and optional SdsType fields. Fields that 
 SdsTypeCode
 ----------
 
-The SdsTypeCode is a numeric identifier used by Sds to identify SdsTypes. A SdsTypeCode exists for 
+The SdsTypeCode is a numeric identifier used by SDS to identify SdsTypes. A SdsTypeCode exists for 
 every supported type.
 
 Atomic types, such as strings, floats and arrays, are defined entirely by the SdsTypeCode. Atomic 
@@ -353,7 +353,7 @@ An instance of an SdsType is represented by its Properties or members. The maxim
 Properties that can define a compound key is three.
 
 The following table shows the required and optional SdsTypeProperty fields. Fields that 
-are not included are reserved for internal Sds use.
+are not included are reserved for internal SDS use.
 
 +---------------------------+-------------------------+-------------+----------------------------------------+
 |          Property         | Type                    | Optionality | Details                                |
@@ -790,7 +790,7 @@ The following unit of measures are supported for an SdsTypeProperty:
 
 
 Working with SdsTypes using .NET
--------------------------------
+--------------------------------
 
 
 When working in .NET, use the SdsTypeBuilder to create SdsTypes. The SdsTypeBuilder eliminates 
@@ -940,7 +940,7 @@ unique identifiers. Note that the following table contains only a partial list o
 
 
 The SdsTypeBuilder also supports derived types. Note that you need not add the base types to 
-Sds before using SdsTypeBuilder.
+SDS before using SdsTypeBuilder.
 
 Working with SdsTypes when not using .NET
 ----------------------------------------
@@ -966,7 +966,7 @@ In the sample code, ``SdsType``, ``SdsTypeProperty``, and ``SdsTypeCode`` are de
       Char = 4
         ...
   class SdsTypeProperty(object):
-      """Sds type property definition"""
+      """SDS type property definition"""
 
       def __init__(self):
               self.__isKey = False
@@ -996,7 +996,7 @@ In the sample code, ``SdsType``, ``SdsTypeProperty``, and ``SdsTypeCode`` are de
         ...
 
   class SdsType(object):
-      """Sds type definitions"""
+      """SDS type definitions"""
       def __init__(self):
           self.SdsTypeCode = SdsTypeCode.Object
 
@@ -1237,7 +1237,7 @@ Define the SdsType as follows:
   var simpleType = new SdsObjects.SdsType({
       "Id": "Simple",
       "Name": "Simple", 
-      "Description": " This is a simple Sds type ",
+      "Description": " This is a simple SDS type ",
       "SdsTypeCode": SdsObjects.SdsTypeCodeMap.Object,
       "Properties": [timeProperty, stateProperty, measurementProperty]
   });
@@ -1306,11 +1306,11 @@ Extend the SdsType as follows:
 SdsType API
 ----------
 
-The REST APIs provide programmatic access to read and write Sds data. The APIs in this section 
-interact with SdsTypes. When working in .NET convenient Sds Client libraries are available. 
+The REST APIs provide programmatic access to read and write SDS data. The APIs in this section 
+interact with SdsTypes. When working in .NET convenient SDS Client libraries are available. 
 The ISdsMetadataService interface, accessed using theSdsService.GetMetadataService( ) helper, 
 defines the available functions. See
-`Sds Types <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html>`__.
+`SDS Types <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html>`__.
 for general SdsType information.
 
 
@@ -1445,7 +1445,8 @@ Returns a list of types within a given namespace.
 ``string namespaceId``
   The namespace identifier
 ``int skip``
-  An optional value representing the zero-based offset of the first SdsType to retrieve. If not specified, a default value of 0 is used.
+  An optional value representing the zero-based offset of the first SdsType to retrieve. If not specified, 
+  a default value of 0 is used.
 ``int count``
   An optional value representing the maximum number of SdsTypes to retrieve. If not specified, a default value of 100 is used.
 
@@ -1537,7 +1538,7 @@ Returns a list of types within a given namespace.
 ``Create Type``
 -------------
 
-Creates the specified type. If a type with a matching identifier already exists, Sds compares the 
+Creates the specified type. If a type with a matching identifier already exists, SDS compares the 
 existing type with the type that was sent. If the types are identical, a ``Found`` (302) error 
 is returned with the Location header set to the URI where the type may be retrieved using a Get function. 
 If the types do not match, a ``Conflict`` (409) error is returned.
@@ -1546,7 +1547,7 @@ For a matching type (``Found``), clients that are capable of performing a redire
 authorization header can automatically redirect to retrieve the type. However, most clients, 
 including the .NET HttpClient, consider redirecting with the authorization token to be a security vulnerability.
 
-When a client performs a redirect and strips the authorization header, Sds cannot authorize the request and 
+When a client performs a redirect and strips the authorization header, SDS cannot authorize the request and 
 returns ``Unauthorized`` (401). For this reason, it is recommended that when using clients that do not 
 redirect with the authorization header, you should disable automatic redirect.
 
@@ -1573,7 +1574,7 @@ redirect with the authorization header, you should disable automatic redirect.
 
 **Response body**
 
-  The request content is the serialized SdsType. If you are not using the Sds client libraries, we recommend using JSON.
+  The request content is the serialized SdsType. If you are not using the SDS client libraries, we recommend using JSON.
   
   Sample SdsType content:
   
@@ -1764,7 +1765,7 @@ Response body
   the client redirects a GET to the Location header. If the existing type does not match the type
   in the request body, a Conflict error response is returned and the client library method throws an exception. 
 
-  The Sds .NET Libraries manage redirects.
+  The SDS .NET Libraries manage redirects.
 
 **Security**
 
