@@ -7,7 +7,7 @@ The REST APIs provide programmatic access to read and write data. This section i
 the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by :ref:`QiType_topic`,  
 :ref:`Sds_View_topic`, :ref:`Qi_Filter_expressions_topic`, and :ref:`Qi_Table_format_topic`.
 
-If you are working in a .NET environment, convenient Sds Client libraries are available. 
+If you are working in a .NET environment, convenient SDS Client libraries are available. 
 The ``ISdsDataServiceinterface``, which is accessed using the ``SdsService.GetDataService()`` helper, 
 defines the functions that are available.
 
@@ -55,13 +55,13 @@ responses do not include any values that are equal to the default value for thei
 Verbose json responses include all values, including defaults, in the returned json payload. To specify 
 verbose json return, add the header ``Accept-Verbosity`` with a value of ``verbose`` to the request.  
 
-To specify Sds format, set the ``Accept`` header in the request to ``application/Sds``.
+To specify SDS format, set the ``Accept`` header in the request to ``application/Sds``.
 
 Indexes and reading data
 ------------------------
 
 Most read operations take at least one index as a parameter. Indexes may be specified as strings, or, 
-when using the Sds Client libraries, the index may be passed as-is to read methods that take the index 
+when using the SDS Client libraries, the index may be passed as-is to read methods that take the index 
 type as a generic argument. Additional details about working with indexes can be found on the :ref:`Indexes_topic` page. 
 
 
