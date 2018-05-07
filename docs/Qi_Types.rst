@@ -24,6 +24,10 @@ known as the Primary Index. While a timestamp (DateTime) is a very common type o
 can be ordered is permitted. Other indexes (secondary indexes), are defined in the SdsStream. 
 Indexes are discussed in greater detail here: :doc:`indexes`
 
+When defining a type, consider how the events will be represented in a stream. The SdsType defines 
+each event in the stream. An event is a single unit whose properties have values that relate to the 
+index; that is, each property of an SdsType event is related to the event’s index. Each event is a single unit.
+
 An SdsType is referenced by its identifier or Id field. SdsType identifiers must be unique within a Namespace.
 
 SdsTypes define how events are associated and read within a collection of events, or SdsStream. The read 
@@ -31,17 +35,13 @@ characteristics when attempting to read non-existent indexes, indexes that fall 
 existing indexes, are determined by the interpolation and extrapolation settings of the SdsType. For more 
 information about read characteristics see [Add link for Interpolation] and [Add link for Extrapolation].
 
-SdsTypes are immutable; after an SdsType is referenced by an SdsStream or an SdsView, it cannot be changed. 
-An SdsType can be deleted only if no SdsStreams or SdsViews reference it.
+SdsTypes are mostly immutable. When an SdsType is referenced by a stream or a view, its form  cannot be changed. 
+Certain fields, such as the friendly name or description, can be changed because they do not affect the function 
+of the SdsType. In addition, the SdsType may be deleted only if no streams or views reference it.
 
-SdsType management using the .NET SDS Client Libraries is performed through the ``ISdsMetadataService``. 
-You can create the ISdsMetadataService using one of the ``SdsService.GetMetadataService()`` factory methods.
-
-Only SdsTypes used to define SdsStreams need to be added to the Sequential data store. SdsTypes that define Properties or base types 
-are contained within the parent SdsType and do not need to be added to SDS independently.
-
-The .NET libraries provide SdsTypeBuilder to help build SdsTypes from .NET types. SdsTypeBuilder is 
-discussed in greater detail below.
+Only SdsTypes used to define SdsStreams or SdsViews are required to be added to the Sequential data store. 
+SdsTypes that define Properties or base types are contained within the parent SdsType and are not required
+to be added to the Data Store independently.
 
 The following table shows the required and optional SdsType fields. Fields that are not included are reserved for internal SDS use.
 
@@ -91,22 +91,28 @@ The following table shows the required and optional SdsType fields. Fields that 
 7. Cannot contain consecutive periods.
 8. Cannot consist of only periods.
 
+SdsType management using the .NET SDS Client Libraries is performed through the ``ISdsMetadataService``. 
+You can create the ``ISdsMetadataService`` using one of the ``SdsService.GetMetadataService()`` factory methods.
+
+The .NET libraries provide SdsTypeBuilder to help build SdsTypes from .NET types. SdsTypeBuilder is 
+discussed in greater detail below.
+
 
 SdsTypeCode
-----------
+-----------
 
-The SdsTypeCode is a numeric identifier used by SDS to identify SdsTypes. A SdsTypeCode exists for 
+The SdsTypeCode is a numeric identifier used by the Data Store to identify SdsTypes. A SdsTypeCode exists for 
 every supported type.
 
 Atomic types, such as strings, floats and arrays, are defined entirely by the SdsTypeCode. Atomic 
-types do not need SdsType Properties defined.
+types do not need fields to define the type.
 
 Types requiring additional definition, such as enums and objects, are identified using a generic 
-SdsTypeCode, such as ByteEnum, Int32Enum, NullableInt32Enum, or Object, and are defined using Properties.
+SdsTypeCode, such as ByteEnum, Int32Enum, NullableInt32Enum, or Object, plus additional SdsProperty fields.
 
 
-Supported Types
-----------------
+**Supported Types**
+
 
 The following types are supported and defined by the SdsTypeCode:
 
@@ -348,9 +354,7 @@ you are using.
 SdsTypeProperty
 ---------------
 
-An SdsTypeProperty is used to define the collection of fields or Properties in an SdsType. 
-An instance of an SdsType is represented by its Properties or members. The maximum number of 
-Properties that can define a compound key is three.
+The Properties collection define the fields in an SdsType. 
 
 The following table shows the required and optional SdsTypeProperty fields. Fields that 
 are not included are reserved for internal SDS use.
@@ -386,13 +390,15 @@ are not included are reserved for internal SDS use.
 The SdsTypeProperty’s identifier follows the same rules as the SdsType’s identifier.
 
 IsKey is a Boolean value used to identify the SdsType’s Key. A Key defined by more than one 
-Property is called a compound key. In a compound key, each Property that is included in the 
+Property is called a compound key. The maximum number of Properties that can define a compound key is three. 
+
+In a compound key, each Property that is included in the 
 Key is specified as IsKey. The Order field defines the precedence of fields applied to the Index.
 
 The Value field is used for properties that represent a value. An example of a property with a 
 value is an enum’s named constant. When representing an enum in a SdsType, the SdsType’s 
 Properies collection defines the enum’s constant list. The SdsTypeProperty’s Identifier represents 
-the constant’s name and the SdsTypeProperty’s Value represents the constant’s value.
+the constant’s name and the SdsTypeProperty’s Value represents the constant’s value (see the enum State definitions below).
 
 InterpolationModeOverride is assigned when the Property of the event should be interpolated in a specific way 
 that differs from the InterpolationMode of the SdsType. InterpolationModeOverride is only applied to a Property 
@@ -940,14 +946,14 @@ unique identifiers. Note that the following table contains only a partial list o
 
 
 The SdsTypeBuilder also supports derived types. Note that you need not add the base types to 
-SDS before using SdsTypeBuilder.
+the Data Store before using SdsTypeBuilder. Base types are maintained within the SdsType.
 
 Working with SdsTypes when not using .NET
 ----------------------------------------
 
 
 SdsTypes must be built manually when .NET SdsTypeBuilder is unavailable. The following discussion 
-refers to the types that are defined in  
+refers to the following types and are defined in  
 `Python <https://github.com/osisoft/Qi-Samples/tree/master/Basic/Python>`__ and 
 `JavaScript <https://github.com/osisoft/Sds-Samples/tree/master/Basic/JavaScript>`__ samples. 
 Samples in other languages can be found here: `Samples <https://github.com/osisoft/Qi-Samples/tree/master/Basic>`__.
@@ -1136,7 +1142,7 @@ Define the SdsType as follows:
 
 ::
 
-    # Create the properties
+  # Create the properties
 
   # Time is the primary key
   time = SdsTypeProperty()
@@ -1237,7 +1243,7 @@ Define the SdsType as follows:
   var simpleType = new SdsObjects.SdsType({
       "Id": "Simple",
       "Name": "Simple", 
-      "Description": " This is a simple SDS type ",
+      "Description": "This is a simple SDS type ",
       "SdsTypeCode": SdsObjects.SdsTypeCodeMap.Object,
       "Properties": [timeProperty, stateProperty, measurementProperty]
   });
@@ -1308,7 +1314,7 @@ SdsType API
 
 The REST APIs provide programmatic access to read and write SDS data. The APIs in this section 
 interact with SdsTypes. When working in .NET convenient SDS Client libraries are available. 
-The ISdsMetadataService interface, accessed using theSdsService.GetMetadataService( ) helper, 
+The ISdsMetadataService interface, accessed using the ``SdsService.GetMetadataService( )`` helper, 
 defines the available functions. See
 `SDS Types <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html>`__.
 for general SdsType information.
@@ -1538,7 +1544,7 @@ Returns a list of types within a given namespace.
 ``Create Type``
 -------------
 
-Creates the specified type. If a type with a matching identifier already exists, SDS compares the 
+Creates the specified type. If a type with a matching identifier already exists, The Data Store compares the 
 existing type with the type that was sent. If the types are identical, a ``Found`` (302) error 
 is returned with the Location header set to the URI where the type may be retrieved using a Get function. 
 If the types do not match, a ``Conflict`` (409) error is returned.
@@ -1549,7 +1555,7 @@ including the .NET HttpClient, consider redirecting with the authorization token
 
 When a client performs a redirect and strips the authorization header, SDS cannot authorize the request and 
 returns ``Unauthorized`` (401). For this reason, it is recommended that when using clients that do not 
-redirect with the authorization header, you should disable automatic redirect.
+redirect with the authorization header, you should disable automatic redirect and perform the redirect manually.
 
 
 **Request**
@@ -1574,7 +1580,8 @@ redirect with the authorization header, you should disable automatic redirect.
 
 **Response body**
 
-  The request content is the serialized SdsType. If you are not using the SDS client libraries, we recommend using JSON.
+  The request content is the serialized SdsType. If you are not using the SDS client libraries, it is recommended 
+  that you use JSON.
   
   Sample SdsType content:
   
