@@ -1,14 +1,15 @@
 .. _Introducing_Qi_topic:
 
-===============
-Introducing SDS
-===============
+=====================================
+Introducing the Sequential Data Store
+=====================================
 
 .. contents:: Topics in this section:
     :depth: 3
 
 
-The Sequential Data Store (SDS) is a highly flexible cloud-based sequential data store that you use to store, retrieve, and analyze data. You 
+The Sequential Data Store (SDS) is a highly flexible cloud-based sequential data store that you use to store, 
+retrieve, and analyze data. You 
 create and write data to *streams* using a simple REST (*REpresentational State Transfer*) API (*Application 
 Programming Interface*). The streams you create can be used to store simple or complex data types to suit 
 your application needs. You can define simple or complex indexing to arrange and relate your data. An assortment 
@@ -18,7 +19,7 @@ of methods with customizable behaviors are available to read data and easily obt
 Access to SDS
 ------------
 
-You must acquire a Tenant, security credentials, and a Namespace before interacting with SDS. If you do not 
+You must acquire a Tenant, security credentials, and a Namespace before interacting with the Data Store. If you do not 
 have a Tenant, you can request access to the SDS Preview at `OSIsoft Cloud Services <cloudservices@osisoft.com>`__.
 
 The SDS Preview program is limited; contacting OSIsoft does not assure participation.
@@ -49,7 +50,8 @@ various SDS objects and helps you get started with your own application.
 Architecture
 ------------
 
-A Tenant represents a client or organization that owns and manages a collection of OSIsoft Cloud Services, including SDS. 
+A Tenant represents a client or organization that owns and manages a collection of OSIsoft Cloud Services, including 
+the Sequential Data Store. 
 
 Tenants are divided into one or more logical units called Namespaces. Each Namespace is distinct and separate from 
 other Namespaces, with its own instances of the various OSIsoft Cloud Services and data stores. 
@@ -67,7 +69,7 @@ Getting help
 The following email address is available to participants of the SDS
 Preview for both product support and feedback:
 
-`QiSupport@osisoft.com <mailto://QiSupport@osisoft.com>`__
+`CloudServices@osisoft.com <mailto://CloudServices@osisoft.com>`__
 
 The OSIsoft team will respond to all support requests as
 quickly as possible during business hours (Pacific Time).
