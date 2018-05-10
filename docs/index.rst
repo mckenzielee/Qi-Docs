@@ -1,7 +1,7 @@
 Welcome
 =======
 
-OSIsoft Cloud Srevices (OCS) is a highly flexible cloud-based platform that provides scalable, elastic,  
+OSIsoft Cloud Services (OCS) is a highly flexible cloud-based platform that provides scalable, elastic,  
 centralized environment to aggregate data for reporting, advanced analytics, and third-party applications.
 
 Sequential data store (SDS)
