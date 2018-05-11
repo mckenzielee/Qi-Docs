@@ -1,13 +1,13 @@
 Welcome
 =======
 
-OSIsoft Cloud Srevices (OCS) is a highly flexible cloud-based platform that provides scalable, elastic,  
+OSIsoft Cloud Services (OCS) is a highly flexible cloud-based platform that provides scalable, elastic,  
 centralized environment to aggregate data for reporting, advanced analytics, and third-party applications.
 
-Sequential data store (Sds)
+Sequential data store (SDS)
 ---------------------------
 
-A sequential data store (Sds) is used to store, retrieve, and analyze data. You create and write data
+A sequential data store (SDS) is used to store, retrieve, and analyze data. You create and write data
 to streams using a simple REST API. The streams are able to store simple or
 complex data types to suit the application needs. An assortment of
 methods with customizable behaviors are available to read data and
