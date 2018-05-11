@@ -3,20 +3,31 @@ NamespaceTier
 
 An attribute that specifies namespace performance.
 
-	The following code shows the JSON-serialized NamespaceTier object for HTTP requests and responses:
+	For HTTP requests and responses, the NamespaceTier object has the following properties and JSON-serialized body: 
 
 .. _NamespaceTierObj: 
+
+``String Id``
+	GUID for this Namespace Tier.
+``String Description``
+	Description of this Tier.
+``Int32 ThroughputUnits``
+	The number of throughput units associated with this Tier.
+``Int32 StorageUnits``
+	The number of Storage units associated with this Tier.
 
 .. highlight:: C#
 
 ::
 
+	HTTP/1.1 200
+	Content-Type: application/json
+
  {
-	"Id": "id",                            //GUID for this Namespace Tier.
-	"Description": "description",          //Description of this Tier.
-	"ThroughputUnits": 0,                  //The number of throughput units associated with this Tier.
-	"StorageUnits": 0,                     //The number of Storage units associated with this Tier.
-	"CalculationUnits": 0                  //The number of calculation units associated with this Tier.
+	"Id": "id",
+	"Description": "description",
+	"ThroughputUnits": 0,
+	"StorageUnits": 0
  }
 
 ``GetNamespaceTier()``

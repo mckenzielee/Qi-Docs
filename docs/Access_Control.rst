@@ -72,6 +72,8 @@ The following code sample shows the structure and format for an ACL
 that gives Role 1 Read Access, Role 2 All access 
 but denies Role 3 ManageAccessControl Access:
 
+.. _AccessControlListObj: 
+
 **Body**
   
   Sample  body:
@@ -122,6 +124,7 @@ entity's AccessControlList's AccessControlEntries.
 
 The following code samples shows the format and structure of an owner object:
 
+.. _TrusteeObj: 
 
 **User Owner Body**
 
