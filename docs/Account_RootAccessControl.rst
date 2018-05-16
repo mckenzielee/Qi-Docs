@@ -3,6 +3,10 @@ RootAccessControl
 
 A Namespace is a collection of Data Stream.
 
+|
+
+**********************
+
 ``GetRootNamespaceAcl()``
 --------------------------------------------------------------------
 
@@ -16,14 +20,14 @@ Get the :ref:`AccessControlList <AccessControlListObj>` that is used to authoriz
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	The idenfifier for the account being accessed.
 
 **Security**
-	
+	:ref:`CommonAccessRights.Read <CommonAccessRightsEnum>`
 
 **Returns**
-	The root :ref:`AccessControlList <AccessControlListObj>` for :ref:`Namespace <NamespaceObj>`s.
+	The root :ref:`AccessControlList <AccessControlListObj>` for :ref:`Namespaces <NamespaceObj>`.
 
 
 
@@ -44,16 +48,16 @@ Set the :ref:`AccessControlList <AccessControlListObj>` that is used to authoriz
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	The idenfifier for the account being modified.
 ``AccessControlList newAccessControlList``
-	The new root :ref:`AccessControlList <AccessControlListObj>` for :ref:`Namespace <NamespaceObj>`s.
+	The new root :ref:`AccessControlList <AccessControlListObj>` for :ref:`Namespaces <NamespaceObj>`.
 
 **Security**
-	
+	:ref:`CommonAccessRights.ManageAccessControl <CommonAccessRightsEnum>`
 
 **Returns**
-	The new root :ref:`AccessControlList <AccessControlListObj>` for :ref:`Namespace <NamespaceObj>`s.
+	The new root :ref:`AccessControlList <AccessControlListObj>` for :ref:`Namespaces <NamespaceObj>`.
 
 
 

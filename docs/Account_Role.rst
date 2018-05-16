@@ -39,6 +39,10 @@ A Role is an entity that is used to authorize API requests.
 	"RoleTypeId": "roletypeid"
  }
 
+|
+
+**********************
+
 ``GetAccountRole()``
 --------------------------------------------------------------------
 
@@ -85,9 +89,9 @@ Retrieves all Account Roles for the specified Account Id.
 ``string tenantId``
 	The Account identifier for this request
 ``string skip``
-	Number of :ref:`Role <RoleObj>`s to ignore
+	Number of :ref:`Roles <RoleObj>` to ignore
 ``string count``
-	Number of :ref:`Role <RoleObj>`s to be returned
+	Number of :ref:`Roles <RoleObj>` to be returned
 ``string query``
 	Unsupported parameter
 

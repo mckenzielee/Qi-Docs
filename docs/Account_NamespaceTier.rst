@@ -30,6 +30,10 @@ An attribute that specifies namespace performance.
 	"StorageUnits": 0
  }
 
+|
+
+**********************
+
 ``GetNamespaceTier()``
 --------------------------------------------------------------------
 

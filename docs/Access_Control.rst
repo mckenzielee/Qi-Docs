@@ -51,6 +51,7 @@ that Read and Write access is permitted.
 | Denied                | 1      |
 +-----------------------+--------+
 
+.. _CommonAccessRightsEnum: 
 
 +-----------------------+------+---------+
 | AccessRights          | int  | bitwise |

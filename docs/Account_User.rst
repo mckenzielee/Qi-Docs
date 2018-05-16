@@ -45,6 +45,10 @@ User
 	"Preferences":  { }
  }
 
+|
+
+**********************
+
 ``Get()``
 --------------------------------------------------------------------
 
@@ -288,9 +292,9 @@ Retrieves all roles for the specified user.
 ``string userId``
 	The identifier of the :ref:`User <UserObj>` whose roles will be retrieved
 ``string skip``
-	Number of :ref:`Role <RoleObj>`s to ignore
+	Number of :ref:`Roles <RoleObj>` to ignore
 ``string count``
-	Number of :ref:`Role <RoleObj>`s to be returned
+	Number of :ref:`Roles <RoleObj>` to be returned
 ``string query``
 	Unsupported parameter
 

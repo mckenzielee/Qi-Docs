@@ -14,7 +14,7 @@ A Namespace is a collection of Data Streams.
 ``string Description``
 	Description of this Namespace.
 ``string TierId``
-	GUID of the Tier that this Namespace is associated with.
+	:ref:`string <StringObj>` Id of the Tier that this Namespace is associated with.
 ``int32 ThroughputUnits``
 	Number of Throughput units for this Namespace.
 ``int32 StorageUnits``
@@ -22,7 +22,7 @@ A Namespace is a collection of Data Streams.
 ``NamespaceProvisioningState State``
 	Current state of this Namespace.
 ``OwnerTrustee Owner``
-	Represents a :ref:`Trustee <TrusteeObj>` that can be an owner of an :ref:`ISecurable <ISecurableObj>`.
+	Owner :ref:`Trustee <TrusteeObj>` of this Namespace.
 ``AccessControlList AccessControlList``
 	Access Control List.
 
@@ -51,10 +51,14 @@ A Namespace is a collection of Data Streams.
 	 }
  }
 
+|
+
+**********************
+
 ``GetAll()``
 --------------------------------------------------------------------
 
-Returns all :ref:`Namespace <NamespaceObj>`s owned by the specified tenant that the caller has access to.
+Returns all :ref:`Namespaces <NamespaceObj>` owned by the specified tenant that the caller has access to.
 
 **Http**
 
@@ -68,7 +72,7 @@ Returns all :ref:`Namespace <NamespaceObj>`s owned by the specified tenant that 
 	The :ref:`Tenant <TenantObj>` identifier for the request.
 
 **Security**
-	:ref:`Read <ReadObj>` on governing :ref:`AccessControlList <AccessControlListObj>`.
+	:ref:`CommonAccessRights.Read <CommonAccessRightsEnum>` on governing :ref:`AccessControlList <AccessControlListObj>`.
 
 **Returns**
 	An array of all :ref:`Namespace <NamespaceObj>` objects for the specified tenantId that the caller has access.
