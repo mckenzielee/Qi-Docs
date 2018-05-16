@@ -7,17 +7,17 @@ A Namespace is a collection of Data Streams.
 
 .. _NamespaceObj: 
 
-``String Id``
+``string Id``
 	Name of this Namespace. Unique within a Tenant's Namespaces.
-``String TenantId``
+``string TenantId``
 	GUID of the Tenant that this Namespace corresponds to
-``String Description``
+``string Description``
 	Description of this Namespace.
-``String TierId``
+``string TierId``
 	GUID of the Tier that this Namespace is associated with.
-``Int32 ThroughputUnits``
+``int32 ThroughputUnits``
 	Number of Throughput units for this Namespace.
-``Int32 StorageUnits``
+``int32 StorageUnits``
 	Number of Storage units for this Namespace.
 ``NamespaceProvisioningState State``
 	Current state of this Namespace.
@@ -64,7 +64,7 @@ Returns all :ref:`Namespace <NamespaceObj>`s owned by the specified tenant that 
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	The :ref:`Tenant <TenantObj>` identifier for the request.
 
 **Security**
@@ -92,9 +92,9 @@ Returns the Namespace with the specified Id.
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	The account identifier for the request
-``String namespaceId``
+``string namespaceId``
 	The Namespace identifier for this request
 
 **Security**
@@ -122,7 +122,7 @@ Creates a namespace.
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	The idenfifier for the account the namespace is to be created for.
 ``Namespace namespaceObj``
 	The :ref:`Namespace <NamespaceObj>` to be created.
@@ -152,9 +152,9 @@ Updates namespace information - description, tier Id, and AccessControl. Cannot 
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	The identifier of namespace's account.
-``String namespaceId``
+``string namespaceId``
 	The identifier for the namespace to update.
 ``Namespace newProperties``
 	The new details to store for the namespace.
@@ -184,9 +184,9 @@ Deletes a namespace.
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	The identifier of namespace's account
-``String namespaceId``
+``string namespaceId``
 	The identifier of the namespace to be deleted
 
 **Security**

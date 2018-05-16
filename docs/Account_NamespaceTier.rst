@@ -7,13 +7,13 @@ An attribute that specifies namespace performance.
 
 .. _NamespaceTierObj: 
 
-``String Id``
+``string Id``
 	GUID for this Namespace Tier.
-``String Description``
+``string Description``
 	Description of this Tier.
-``Int32 ThroughputUnits``
+``int32 ThroughputUnits``
 	The number of throughput units associated with this Tier.
-``Int32 StorageUnits``
+``int32 StorageUnits``
 	The number of Storage units associated with this Tier.
 
 .. highlight:: C#
@@ -43,7 +43,7 @@ Retrieves a Namespace tier associated with a specified id
 
 **Parameters**
 
-``String namespaceTierId``
+``string namespaceTierId``
 	The tier identifier for this request
 
 **Security**

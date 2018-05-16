@@ -16,11 +16,11 @@ Create a :ref:`ClientApiKeySet <ClientApiKeySetObj>` for the specified applicati
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	ID of the tenant the application belongs to.
-``String applicationId``
+``string applicationId``
 	ID of the application for this request
-``String description``
+``string description``
 	Description of the :ref:`ClientApiKeySet <ClientApiKeySetObj>`
 
 **Security**
@@ -34,15 +34,15 @@ Create a :ref:`ClientApiKeySet <ClientApiKeySetObj>` for the specified applicati
 
 .. _ClientApiKeySetObj: 
 
-``String AppUri``
+``string AppUri``
 	App ID URI.
-``Boolean CreateFirstKey``
+``bool CreateFirstKey``
 	Create the first key in the Client API Key Set.
-``String DisplayName``
+``string DisplayName``
 	Display name.
-``IDictionary`2 RequiredResource``
+``[string,[string]] RequiredResource``
 	List of required resources.
-``String TenantId``
+``string TenantId``
 	Tenant Id.
 
 .. highlight:: C#
@@ -79,9 +79,9 @@ Get the :ref:`ClientApiKeyCollection <ClientApiKeyCollectionObj>` for the specif
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	ID of the tenant the application belongs to.
-``String applicationId``
+``string applicationId``
 	ID of the application for this request
 
 **Security**
@@ -95,9 +95,9 @@ Get the :ref:`ClientApiKeyCollection <ClientApiKeyCollectionObj>` for the specif
 
 .. _ClientApiKeyCollectionObj: 
 
-``String Id``
+``string Id``
 	Gets the identifier for this collection of API access keys, a GUID.
-``List`1 Keys``
+``[ClientApiKey] Keys``
 	Gets a list of the application's access keys.
 
 .. highlight:: C#
@@ -131,11 +131,11 @@ Delete a specified :ref:`ClientApiKeySet <ClientApiKeySetObj>`.
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	ID of the tenant the application belongs to.
-``String applicationId``
+``string applicationId``
 	ID of the application for this request
-``String keyId``
+``string keyId``
 	ID of the :ref:`ClientApiKeySet <ClientApiKeySetObj>` to be deleted.
 
 **Security**
@@ -163,13 +163,13 @@ Lists all applications from a customer's directory
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	ID of the tenant the application belongs to
-``String skip``
+``string skip``
 	Number of applications to skip for paging purposes.
-``String count``
+``string count``
 	>Maximum number of applications to return in this page.
-``String query``
+``string query``
 	Prefix match to filter applications by applicationId or display name
 
 **Security**
@@ -183,13 +183,13 @@ Lists all applications from a customer's directory
 
 .. _ApplicationObj: 
 
-``String Id``
+``string Id``
 	Application Identifier
-``String TenantId``
+``string TenantId``
 	Tenant Id
-``String Name``
+``string Name``
 	Application Display Name
-``IEnumerable`1 Roles``
+``[Role] Roles``
 	List of roles for the application
 
 .. highlight:: C#
@@ -225,7 +225,7 @@ Registers the application with cloud services
 
 **Parameters**
 
-``String tenantId``
+``string tenantId``
 	ID of the tenant the application belongs to
 ``Application application``
 	:ref:`Application <ApplicationObj>` object with required properties.
