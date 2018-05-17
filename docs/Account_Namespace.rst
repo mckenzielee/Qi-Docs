@@ -14,7 +14,7 @@ A Namespace is a collection of Data Streams.
 ``string Description``
 	Description of this Namespace.
 ``string TierId``
-	:ref:`string <StringObj>` Id of the Tier that this Namespace is associated with.
+	Id of the Tier that this Namespace is associated with.
 ``int32 ThroughputUnits``
 	Number of Throughput units for this Namespace.
 ``int32 StorageUnits``
@@ -72,7 +72,7 @@ Returns all :ref:`Namespaces <NamespaceObj>` owned by the specified tenant that 
 	The :ref:`Tenant <TenantObj>` identifier for the request.
 
 **Security**
-	:ref:`CommonAccessRights.Read <CommonAccessRightsEnum>` on governing :ref:`AccessControlList <AccessControlListObj>`.
+	A :ref:`Namespace <NamespaceObj>` can only be retrieved if the current principle has Read access.
 
 **Returns**
 	An array of all :ref:`Namespace <NamespaceObj>` objects for the specified tenantId that the caller has access.
@@ -102,7 +102,7 @@ Returns the Namespace with the specified Id.
 	The Namespace identifier for this request
 
 **Security**
-	Allowed by Account Member :ref:`Role <RoleObj>`
+	A :ref:`Namespace <NamespaceObj>` can only be retrieved if the current principle has Read access.
 
 **Returns**
 	A :ref:`Namespace <NamespaceObj>` object with the specified namespaceId
@@ -132,7 +132,7 @@ Creates a namespace.
 	The :ref:`Namespace <NamespaceObj>` to be created.
 
 **Security**
-	Allowed by Account Member :ref:`Role <RoleObj>`
+	A :ref:`Namespace <NamespaceObj>` can only be create if the current principle has Write access.
 
 **Returns**
 	The created :ref:`Namespace <NamespaceObj>` object
@@ -146,7 +146,7 @@ Creates a namespace.
 ``Update()``
 --------------------------------------------------------------------
 
-Updates namespace information - description, tier Id, and AccessControl. Cannot specify Owner for a request.
+Updates Namespace information - Description, TierId, AccessControl, and Owner.
 
 **Http**
 
@@ -157,14 +157,15 @@ Updates namespace information - description, tier Id, and AccessControl. Cannot 
 **Parameters**
 
 ``string tenantId``
-	The identifier of namespace's account.
+	The identifier of Namespace's Account.
 ``string namespaceId``
-	The identifier for the namespace to update.
+	The identifier for the Namespace to update.
 ``Namespace newProperties``
-	The new details to store for the namespace.
+	The new details to store for the Namespace.
 
 **Security**
-	Allowed by Account Member :ref:`Role <RoleObj>`
+	A :ref:`Namespace <NamespaceObj>` can only be updated if the current principle has Write access.
+            The AccessControlList and Owner can only be updated if the current principle has ManageAccessControl access.
 
 **Returns**
 	The updated :ref:`Namespace <NamespaceObj>`.
@@ -194,7 +195,7 @@ Deletes a namespace.
 	The identifier of the namespace to be deleted
 
 **Security**
-	Allowed by Account Member :ref:`Role <RoleObj>`
+	A :ref:`Namespace <NamespaceObj>` can only be deleted if the current principle has Delete access.
 
 **Returns**
 	Nothing is returned

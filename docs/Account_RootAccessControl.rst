@@ -1,7 +1,7 @@
 RootAccessControl
 =======================================================
 
-A Namespace is a collection of Data Stream.
+Apis to control default access to entities governed by an :ref:`AccessControlList <AccessControlListObj>`.
 
 |
 
