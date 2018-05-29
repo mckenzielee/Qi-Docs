@@ -22,7 +22,7 @@ An SdsType used to define an SdsStream must have a Key. A Key is a Property, or 
 that constitute an ordered, unique identity. The Key is ordered, so it functions as an index; it is 
 known as the Primary Index. While a timestamp (DateTime) is a very common type of Key, any type that 
 can be ordered is permitted. Other indexes (secondary indexes), are defined in the SdsStream. 
-Indexes are discussed in greater detail here: `Indexes <https://qi-docs.readthedocs.io/en/latest/indexes.html>`_
+Indexes are discussed in greater detail here: `Indexes <https://qi-docs.readthedocs.io/en/latest/indexes.html>`__
 
 An SdsType is referenced by its identifier or Id field. SdsType identifiers must be unique within a Namespace.
 
@@ -202,7 +202,7 @@ Interpolation
 -------------
 
 Interpolation determines how a stream behaves when asked to return an event at an index between 
-two existing events. ``InterpolationMode`` determines how the returned event is constructed. The table 
+two existing events. InterpolationMode determines how the returned event is constructed. The table 
 below lists InterpolationModes:
 
 +---------------------------+--------------------------------+--------------------------------------------------+
@@ -258,7 +258,7 @@ Decimal.MaxValue) the call might result in a BadRequest exception.
 
 If the InterpolationMode is not assigned, the events are interpolated in the default manner, unless the interpolation 
 mode is overridden in the TypeProperty or the SdsStream. For more information on overriding the interpolation mode 
-on a specific type property see SdsTypeProperty_. For more information on overriding the interpolation mode for a specific stream see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html>`__.
+on a specific type property see SdsTypeProperty_. For more information on overriding the interpolation mode for a specific stream see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html>`_.
 
 Extrapolation
 -------------
@@ -383,16 +383,18 @@ value is an enum’s named constant. When representing an enum in a SdsType, the
 Properies collection defines the enum’s constant list. The SdsTypeProperty’s Identifier represents 
 the constant’s name and the SdsTypeProperty’s Value represents the constant’s value.
 
-``InterpolationMode`` is assigned when the Property of the event should be interpolated in a specific way 
-that differs from the InterpolationMode of the SdsType. ``InterpolationMode`` is only applied to a Property 
-that is not part of the Index. If the ``InterpolationMode`` is not set, the Property is are interpolated 
-in the manner defined by the SdsType’s ``IntepolationMode``.
+InterpolationMode is assigned when the Property of the event should be interpolated in a specific way 
+that differs from the InterpolationMode of the SdsType. InterpolationMode is only applied to a Property 
+that is not part of the Index. If the InterpolationMode is not set, the Property is are interpolated 
+in the manner defined by the SdsType’s IntepolationMode.
 
-An SdsType with the ``InterpolationMode`` set to Discrete cannot have a Property with an InteroplationMode. 
+An SdsType with the InterpolationMode set to ``Discrete`` cannot have a Property with an InteroplationMode. 
 For more information on interpolation of events see Interpolation_.
 
 Uom is the unit of measure for the Property. The Uom of a Property may be specified by the name or the 
 abbreviation. The names and abbreviations of Uoms are case sensitive. 
+
+The InterpolationMode and Uom of a Property can be overriden on the stream. For more information, see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html>`__. 
 
 Supported Units of Measure
 --------------------------
