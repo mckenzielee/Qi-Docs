@@ -22,14 +22,14 @@ An SdsType used to define an SdsStream must have a Key. A Key is a Property, or 
 that constitute an ordered, unique identity. The Key is ordered, so it functions as an index; it is 
 known as the Primary Index. While a timestamp (DateTime) is a very common type of Key, any type that 
 can be ordered is permitted. Other indexes (secondary indexes), are defined in the SdsStream. 
-Indexes are discussed in greater detail here: :doc:`indexes`
+Indexes are discussed in greater detail here: `Indexes <https://qi-docs.readthedocs.io/en/latest/indexes.html>`_
 
 An SdsType is referenced by its identifier or Id field. SdsType identifiers must be unique within a Namespace.
 
 SdsTypes define how events are associated and read within a collection of events, or SdsStream. The read 
 characteristics when attempting to read non-existent indexes, indexes that fall between, before or after 
 existing indexes, are determined by the interpolation and extrapolation settings of the SdsType. For more 
-information about read characteristics see  `Interpolation <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html#interpolation>`__ and `Extrapolation <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html#extrapolation>`__.
+information about read characteristics see  Interpolation_ and Extrapolation_.
 
 SdsTypes are immutable; after an SdsType is referenced by an SdsStream or an SdsView, it cannot be changed. 
 Types can be deleted only if no streams or views reference it.
@@ -58,13 +58,13 @@ The following table shows the required and optional SdsType fields. Fields that 
 | SdsTypeCode       | SdsTypeCode             | Required    | Numeric code identifying the base   |
 |                   |                         |             | SdsType                             |
 +-------------------+-------------------------+-------------+-------------------------------------+
-| Properties        | IList<SdsTypeProperty>  | Required    | List of SdsTypeProperty items       |
-+-------------------+-------------------------+-------------+-------------------------------------+
 | InterpolationMode | SdsInterpolationMode    | Optional    | Interpolation setting of the type.  |
 |                   |                         |             | Default is Continuous.              |
 +-------------------+-------------------------+-------------+-------------------------------------+
 | ExtrapolationMode | SdsExtrapolationMode    | Optional    | Extrapolation setting of the type.  |
 |                   |                         |             | Default is All.                     |
++-------------------+-------------------------+-------------+-------------------------------------+
+| Properties        | IList<SdsTypeProperty>  | Required    | List of SdsTypeProperty items       |
 +-------------------+-------------------------+-------------+-------------------------------------+
 
 
@@ -258,7 +258,7 @@ Decimal.MaxValue) the call might result in a BadRequest exception.
 
 If the InterpolationMode is not assigned, the events are interpolated in the default manner, unless the interpolation 
 mode is overridden in the TypeProperty or the SdsStream. For more information on overriding the interpolation mode 
-on a specific type property see `SdsTypeProperty <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html#sdstypeproperty>`__. For more information on overriding the interpolation mode for a specific stream see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html>`__.
+on a specific type property see SdsTypeProperty_. For more information on overriding the interpolation mode for a specific stream see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html>`__.
 
 Extrapolation
 -------------
@@ -279,9 +279,9 @@ show how ExtrapolationMode affects returned values for each InterpolationMode va
 +---------------------+---------------------+----------------------------+---------------------------+
 | None                | 1                   | Returns ‘null’             | Returns ‘null’            |
 +---------------------+---------------------+----------------------------+---------------------------+
-| Forward             | 2                   | Returns first data value   | Returns ‘null’            |
+| Forward             | 2                   | Returns ‘null’             | Returns last data value   |
 +---------------------+---------------------+----------------------------+---------------------------+
-| Backward            | 3                   | Returns ‘null’             | Returns last data value   |
+| Backward            | 3                   | Returns first data value   | Returns ‘null’            |
 +---------------------+---------------------+----------------------------+---------------------------+
 
 **ExtrapolationMode with InterpolationMode\ =Discrete**
@@ -389,7 +389,7 @@ that is not part of the Index. If the ``InterpolationMode`` is not set, the Prop
 in the manner defined by the SdsType’s ``IntepolationMode``.
 
 An SdsType with the ``InterpolationMode`` set to Discrete cannot have a Property with an InteroplationMode. 
-For more information on interpolation of events see `Interpolation <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html#interpolation>`__.
+For more information on interpolation of events see Interpolation_.
 
 Uom is the unit of measure for the Property. The Uom of a Property may be specified by the name or the 
 abbreviation. The names and abbreviations of Uoms are case sensitive. 
@@ -1298,9 +1298,7 @@ SdsType API
 The REST APIs provide programmatic access to read and write Sds data. The APIs in this section 
 interact with SdsTypes. When working in .NET convenient Sds Client libraries are available. 
 The ISdsMetadataService interface, accessed using theSdsService.GetMetadataService( ) helper, 
-defines the available functions. See
-`Sds Types <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html>`__.
-for general SdsType information.
+defines the available functions. See Types_ for general SdsType information.
 
 
 ***********************
@@ -1769,7 +1767,7 @@ Response body
 
 Creates the specified type. If a type with the same Id already exists, the definition of the type is updated.
 
-Note that a type cannot be updated if any streams are 
+Note that a type cannot be updated if any streams or views are 
 associated with it. Also, certain parameters, including the type id, cannot be changed after 
 they are defined.
 
@@ -1818,7 +1816,7 @@ they are defined.
 ``Delete Type``
 ------------
 
-Deletes a type from the specified tenant and namespace. Note that a type cannot be deleted if any streams reference it.
+Deletes a type from the specified tenant and namespace. Note that a type cannot be deleted if any streams or views reference it.
 
 **Request**
 
