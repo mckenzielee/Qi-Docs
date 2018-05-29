@@ -394,7 +394,7 @@ For more information on interpolation of events see Interpolation_.
 Uom is the unit of measure for the Property. The Uom of a Property may be specified by the name or the 
 abbreviation. The names and abbreviations of Uoms are case sensitive. 
 
-The InterpolationMode and Uom of a Property can be overriden on the stream. For more information, see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html>`__. 
+The InterpolationMode and Uom of a Property can be overriden on the stream. For more information, see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html#propertyoverrides>`__. 
 
 Supported Units of Measure
 --------------------------
