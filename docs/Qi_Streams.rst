@@ -7,6 +7,11 @@ Sds stores collections of events and provides convenient ways to find and associ
 of consistent structure are stored in streams, called SdsStreams.  An SdsType defines the structure 
 of events in an SdsStream.
 
+.. contents:: Topics in this section:
+    :depth: 2
+
+
+
 SdsStreams are referenced by their identifier or Id field. SdsStream identifiers must be unique 
 within a Namespace.
 
@@ -33,6 +38,12 @@ for internal Sds use.
 | Description       | String                           | Optional    | Description text                             |
 +-------------------+----------------------------------+-------------+----------------------------------------------+
 | Indexes           | IList<SdsStreamIndex>            | Optional    | Used to define secondary indexes for stream  |
++-------------------+----------------------------------+-------------+----------------------------------------------+
+| InterpolationMode | SdsInterpolationMode             | Optional    | Interpolation setting of the stream.         |
+|                   |                                  |             | Default is null.                             |
++-------------------+----------------------------------+-------------+----------------------------------------------+
+| ExtrapolationMode | SdsExtrapolationMode             | Optional    | Extrapolation setting of the stream.         |
+|                   |                                  |             | Default is null.                             |
 +-------------------+----------------------------------+-------------+----------------------------------------------+
 | PropertyOverrides | IList<SdsStreamPropertyOverride> | Optional    | Used to define unit of measure and           |
 |                   |                                  |             | interpolation mode overrides for a stream    |
@@ -63,13 +74,20 @@ Secondary Indexes are applied to a single property; there are no
 compound secondary indexes. Only SdsTypeCodes
 that can be ordered are supported for use in a secondary index.
 
-Indexes are discussed in greater detail here: `Indexes <https://qi-docs-rst.readthedocs.org/en/latest/indexes.html>`__
+Indexes are discussed in greater detail here: `Indexes <https://qi-docs-rst.readthedocs.org/en/latest/indexes.html>`_
+
+
+Interpolation and Extrapolation
+-------------------------------
+
+The InterpolationMode, ExtrapolationMode, and PropertyOverrides_ can be used to determine how a specific stream reads data. These read characteristics are inherited from the type if they are not defined at the stream level. For more information about type read characteristics and how these characteristics dictate how events are read see `Type <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html>`_.
+
 
 PropertyOverrides
 -----------------
 
 PropertyOverrides provide a way to override interpolation behavior and unit of measure for individual 
-SdsType properties for a specific stream.
+SdsType Properties for a specific stream.
 
 The ``SdsStreamPropertyOverride`` object has the following structure:
 
@@ -79,20 +97,19 @@ The ``SdsStreamPropertyOverride`` object has the following structure:
 +===================+================================+=============+===================================================+
 | SdsTypePropertyId | String                         | Required    | SdsTypeProperty identifier                        |
 +-------------------+--------------------------------+-------------+---------------------------------------------------+
-| InterpolstionMode | SdsInterpolationMode           | Optional    | Interpolation setting. Default is null            |
+| InterpolationMode | SdsInterpolationMode           | Optional    | Interpolation setting. Default is null            |
 +-------------------+--------------------------------+-------------+---------------------------------------------------+
-| UomOverride       | String                         | Optional    | Unit of measure                                   |
+| Uom               | String                         | Optional    | Unit of measure                                   |
 +-------------------+--------------------------------+-------------+---------------------------------------------------+
 
-The unit of measure can be overridden for any type property defined by the stream type, including primary keys 
-and secondary indexes. For more information about type property units of measure see SdsType. 
+The unit of measure can be overridden for any type property defined by the stream type, including primary indexes 
+and secondary indexes. For more information about type property units of measure see `SdsTypeProperty <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html#sdstypeproperty>`_. 
 
-Read characteristics of the stream are determined by the type and the PropertyOverrides of the stream. The 
-interpolation mode for non-index properties can be defined and overridden at the stream level. For more 
-information about type read characteristics see SdsType.
+The interpolation mode can be overridden for a type property defined by the stream type that is *not* a primary 
+index. For more information about the InterpolationMode of a type property see `SdsTypeProperty <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html#sdstypeproperty>`_.
 
-When specifying interpolation overrides, if the SdsType InterpolationMode is Discrete, it cannot be overridden 
-at any level. When InterpolationMode is set to Discrete and an event it not defined for that index, a null 
+When specifying property interpolation overrides, if the SdsType InterpolationMode is ``Discrete``, it cannot be overridden 
+at any level. When InterpolationMode is set to ``Discrete`` and an event it not defined for that index, a null 
 value is returned for the entire event.
 
 
@@ -103,8 +120,7 @@ SdsStream API
 The REST APIs provide programmatic access to read and write Sds data. The APIs in this 
 section interact with SdsStreams. When working in .NET convenient Sds Client libraries are 
 available. The ``ISdsMetadataService`` interface, accessed using the ``SdsService.GetMetadataService( )`` helper, 
-defines the available functions. See `SdsStreams <https://qi-docs-rst.readthedocs.org/en/latest/Qi_Streams.html>`__ for general 
-SdsStream information. 
+defines the available functions. See Streams_ for general SdsStream information. 
 
 
 ***********************
