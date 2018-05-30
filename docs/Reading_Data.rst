@@ -62,8 +62,30 @@ Indexes and reading data
 
 Most read operations take at least one index as a parameter. Indexes may be specified as strings, or, 
 when using the Sds Client libraries, the index may be passed as-is to read methods that take the index 
-type as a generic argument. Additional details about working with indexes can be found on the :ref:`Indexes_topic` page. 
+type as a generic argument. Additional details about working with indexes can be found on the :ref:`Indexes_topic` page.
 
+Read Characteristics
+--------------------
+
+When data is requested at an index for which no stored event exists, the read characterisitics determine 
+whether the result is an error, null event, interpolated event, or extrapolated event. The combination of 
+the type of the index and the interpolation and extrapolation modes of the SdsType and the SdsStream 
+determine the read characteristics. For more information on read characteristics, 
+see :ref:`QiType_topic` and :ref:`Qi_Stream_topic`.
+
+**Methods affected by Read Characteristics**
+
+`GetValueAsync <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html#getvalueasync>`__
+  Read characteristics are applied when the index is between, before, or after all data.
+
+`GetValuesAsync <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html#getvaluesasync>`__
+  Read characteristics applied when an index determined by the call is between, before, or after all data.
+
+`GetWindowValuesAsync <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html#getwindowvaluesasync>`__
+  Read characteristics applied to indexes between, before, or after data when the calls Boundary parameter is set to ExactOrCalculated.
+
+`GetRangeValuesAsync <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html#getrangevaluesasync>`__
+  Read characteristics applied to indexes between, before, or after data when the calls Boundary parameter is set to ExactOrCalculated.
 
 SdsView and reading data
 ------------------------
@@ -74,10 +96,9 @@ All reads support specifying a SdsView identifier in the query string to shape t
 
 Working with views is covered in detail in the :ref:`Sds_View_topic` section.
 
-When data is requested at an index for which no stored event exists, the type of the index and 
-the interpolation and extrapolation characteristics defined by the target type of the SdsView 
-determine whether the result is an error, null event, interpolated event, or extrapolated event. 
-The read characteristics are discussed in the *Get Value*, *GetValues* and *GetWindowValues* code samples.
+When data is requested with a SdsView the read characteristics defined by the *target type* of the SdsView 
+determine what is returned. The read characteristics are discussed in the *Get Value*, 
+*GetValues* and *GetWindowValues* code samples.
 
 Filter Expressions
 ------------------
