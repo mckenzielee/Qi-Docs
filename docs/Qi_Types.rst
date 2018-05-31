@@ -22,7 +22,7 @@ An SdsType used to define an SdsStream must have a Key. A Key is a Property, or 
 that constitute an ordered, unique identity. The Key is ordered, so it functions as an index; it is 
 known as the Primary Index. While a timestamp (DateTime) is a very common type of Key, any type that 
 can be ordered is permitted. Other indexes (secondary indexes), are defined in the SdsStream. 
-Indexes are discussed in greater detail here: :doc:`indexes`
+Indexes are discussed in greater detail here: `Indexes <https://qi-docs.readthedocs.io/en/latest/indexes.html>`__
 
 When defining a type, consider how the events will be represented in a stream. The SdsType defines 
 each event in the stream. An event is a single unit whose properties have values that relate to the 
@@ -33,7 +33,7 @@ An SdsType is referenced by its identifier or Id field. SdsType identifiers must
 SdsTypes define how events are associated and read within a collection of events, or SdsStream. The read 
 characteristics when attempting to read non-existent indexes, indexes that fall between, before or after 
 existing indexes, are determined by the interpolation and extrapolation settings of the SdsType. For more 
-information about read characteristics see [Add link for Interpolation] and [Add link for Extrapolation].
+information about read characteristics see  Interpolation_ and Extrapolation_.
 
 SdsTypes are mostly immutable. When an SdsType is referenced by a stream or a view, its form  cannot be changed. 
 Certain fields, such as the friendly name or description, can be changed because they do not affect the function 
@@ -58,22 +58,13 @@ The following table shows the required and optional SdsType fields. Fields that 
 | SdsTypeCode       | SdsTypeCode             | Required    | Numeric code identifying the base   |
 |                   |                         |             | SdsType                             |
 +-------------------+-------------------------+-------------+-------------------------------------+
-| BaseType          | SdsType                 | Optional    | SdsType the class derives from      |
-+-------------------+-------------------------+-------------+-------------------------------------+
-| IsGenericType     | Boolean                 |             | Identifies the type as a generic    |
-|                   |                         |             | (or Template in C++), containing    |
-|                   |                         |             | one or more type argument.          |
-+-------------------+-------------------------+-------------+-------------------------------------+
-| GenericArguments  | IList<SdsType>          | Optional    | List of type arguments satisfying   |
-|                   |                         |             | the generic                         |
-+-------------------+-------------------------+-------------+-------------------------------------+
-| Properties        | IList<SdsTypeProperty>  | Required    | List of SdsTypeProperty items       |
-+-------------------+-------------------------+-------------+-------------------------------------+
 | InterpolationMode | SdsInterpolationMode    | Optional    | Interpolation setting of the type.  |
 |                   |                         |             | Default is Continuous.              |
 +-------------------+-------------------------+-------------+-------------------------------------+
 | ExtrapolationMode | SdsExtrapolationMode    | Optional    | Extrapolation setting of the type.  |
 |                   |                         |             | Default is All.                     |
++-------------------+-------------------------+-------------+-------------------------------------+
+| Properties        | IList<SdsTypeProperty>  | Required    | List of SdsTypeProperty items       |
 +-------------------+-------------------------+-------------+-------------------------------------+
 
 
@@ -217,7 +208,7 @@ Interpolation
 -------------
 
 Interpolation determines how a stream behaves when asked to return an event at an index between 
-two existing events. ``InterpolationMode`` determines how the returned event is constructed. The table 
+two existing events. InterpolationMode determines how the returned event is constructed. The table 
 below lists InterpolationModes:
 
 +---------------------------+--------------------------------+--------------------------------------------------+
@@ -271,10 +262,11 @@ indexes that occur between data in a stream:
 \*When extreme values are involved in an interpolation (for example
 Decimal.MaxValue) the call might result in a BadRequest exception.
 
-If the InterpolationMode is not assigned or overridden, the events are interpolated in the default manner. The 
-InterpolationMode can be overridden in the TypeProperty or the SdsStream. For more information on overriding the 
-interpolation mode on a specific type property, see `SdsTypeProperty <https://github.com/osisoft/Qi-Docs/blob/Doc_edits/docs/Qi_Types.rst#id9>`__. For more information on 
-overriding the interpolation mode for a type property for a specific stream, see SdsStream `PropertyOverrides <https://github.com/osisoft/Qi-Docs/blob/Doc_edits/docs/Qi_Streams.rst#propertyoverrides>`__.
+
+If the InterpolationMode is not assigned, the events are interpolated in the default manner, unless the interpolation 
+mode is overridden in the TypeProperty or the SdsStream. For more information on overriding the interpolation mode 
+on a specific type property see SdsTypeProperty_. For more information on overriding the interpolation mode for a specific stream see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html>`_.
+
 
 Extrapolation
 -------------
@@ -293,11 +285,11 @@ show how ExtrapolationMode affects returned values for each InterpolationMode va
 +=====================+=====================+============================+===========================+
 | All                 | 0                   | Returns first data value   | Returns last data value   |
 +---------------------+---------------------+----------------------------+---------------------------+
-| None                | 1                   | Return null                | Return null               |
+| None                | 1                   | Returns ‘null’             | Returns ‘null’            |
 +---------------------+---------------------+----------------------------+---------------------------+
-| Forward             | 2                   | Returns first data value   | Return null               |
+| Forward             | 2                   | Returns ‘null’             | Returns last data value   |
 +---------------------+---------------------+----------------------------+---------------------------+
-| Backward            | 3                   | Return null                | Returns last data value   |
+| Backward            | 3                   | Returns first data value   | Returns ‘null’            |
 +---------------------+---------------------+----------------------------+---------------------------+
 
 **ExtrapolationMode with InterpolationMode\ =Discrete**
@@ -305,13 +297,13 @@ show how ExtrapolationMode affects returned values for each InterpolationMode va
 +---------------------+---------------------+---------------------+--------------------+
 | ExtrapolationMode   | Enumeration value   | Index before data   | Index after data   |
 +=====================+=====================+=====================+====================+
-| All                 | 0                   | Return null         | Return null        |
+| All                 | 0                   | Returns ‘null’      | Returns ‘null’     |
 +---------------------+---------------------+---------------------+--------------------+
-| None                | 1                   | Return null         | Return null        |
+| None                | 1                   | Returns ‘null’      | Returns ‘null’     |
 +---------------------+---------------------+---------------------+--------------------+
-| Forward             | 2                   | Return null         | Return null        |
+| Forward             | 2                   | Returns ‘null’      | Returns ‘null’     |
 +---------------------+---------------------+---------------------+--------------------+
-| Backward            | 3                   | Return null         | Return null        |
+| Backward            | 3                   | Returns ‘null’      | Returns ‘null’     |
 +---------------------+---------------------+---------------------+--------------------+
 
 **ExtrapolationMode with InterpolationMode\ =StepwiseContinuousLeading**
@@ -321,11 +313,11 @@ show how ExtrapolationMode affects returned values for each InterpolationMode va
 +=====================+=====================+============================+===========================+
 | All                 | 0                   | Returns first data value   | Returns last data value   |
 +---------------------+---------------------+----------------------------+---------------------------+
-| None                | 1                   | Return null                | Return null               |
+| None                | 1                   | Returns ‘null’             | Returns ‘null’            |
 +---------------------+---------------------+----------------------------+---------------------------+
-| Forward             | 2                   | Returns first data value   | Return null               |
+| Forward             | 2                   | Returns ‘null’             | Returns last data value   |
 +---------------------+---------------------+----------------------------+---------------------------+
-| Backward            | 3                   | Return null                | Returns last data value   |
+| Backward            | 3                   | Returns first data value   | Returns ‘null’            |
 +---------------------+---------------------+----------------------------+---------------------------+
 
 **ExtrapolationMode with InterpolationMode\ =StepwiseContinuousTrailing**
@@ -335,21 +327,20 @@ show how ExtrapolationMode affects returned values for each InterpolationMode va
 +=====================+=====================+============================+===========================+
 | All                 | 0                   | Returns first data value   | Returns last data value   |
 +---------------------+---------------------+----------------------------+---------------------------+
-| None                | 1                   | Return null                | Return null               |
+| None                | 1                   | Returns ‘null’             | Returns ‘null’            |
 +---------------------+---------------------+----------------------------+---------------------------+
-| Forward             | 2                   | Returns first data value   | Return null               |
+| Forward             | 2                   | Returns ‘null’             | Returns last data value   |
 +---------------------+---------------------+----------------------------+---------------------------+
-| Backward            | 3                   | Return null                | Returns last data value   |
+| Backward            | 3                   | Returns first data value   | Returns ‘null’            |
 +---------------------+---------------------+----------------------------+---------------------------+
 
-If the ExtrapolationMode is not assigned, the events are extrapolated in the default manner.
 
-For additional information about the effect of interpolation and extrapolation modes, see the
+If the ExtrapolationMode is not assigned, the events are extrapolated in the default manner, unless the extrapolation mode is overridden on the SdsStream. For more information on overriding the extrapolation mode on a specific stream see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html>`__.
+
+For additional information about the effect of read characteristics, see the
 documentation on the `read
 method <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html>`__
 you are using.
-
-
 
 SdsTypeProperty
 ---------------
@@ -380,7 +371,7 @@ are not included are reserved for internal SDS use.
 |                           |                         |             | compound index. Also used              |
 |                           |                         |             | internally                             |
 +---------------------------+-------------------------+-------------+----------------------------------------+
-| InterpolationModeOverride | SdsInterpolationMode    | Optional    | Interpolation setting of the property. |
+| InterpolationMode         | SdsInterpolationMode    | Optional    | Interpolation setting of the property. |
 |                           |                         |             | Default is null.                       |
 +---------------------------+-------------------------+-------------+----------------------------------------+
 | Uom                       | String                  | Optional    | Unit of Measure of the property.       |
@@ -400,16 +391,20 @@ value is an enum’s named constant. When representing an enum in a SdsType, the
 Properies collection defines the enum’s constant list. The SdsTypeProperty’s Identifier represents 
 the constant’s name and the SdsTypeProperty’s Value represents the constant’s value (see the enum State definitions below).
 
-InterpolationModeOverride is assigned when the Property of the event should be interpolated in a specific way 
-that differs from the InterpolationMode of the SdsType. InterpolationModeOverride is only applied to a Property 
-that is not part of the Index. If the InterpolationModeOverride is not set, the Property is are interpolated 
+InterpolationMode is assigned when the Property of the event should be interpolated in a specific way 
+that differs from the InterpolationMode of the SdsType. InterpolationMode is only applied to a Property 
+that is not part of the Index. If the InterpolationMode is not set, the Property is are interpolated 
 in the manner defined by the SdsType’s IntepolationMode.
 
-An SdsType with the InterpolationMode set to Discrete cannot have a Property with an InteroplationModeOverride. 
-For more information on how events are interpolated, see `Interpolation <https://github.com/osisoft/Qi-Docs/blob/Doc_edits/docs/Qi_Types.rst#id5>`__.
+
+An SdsType with the InterpolationMode set to ``Discrete`` cannot have a Property with an InteroplationMode. 
+For more information on interpolation of events see Interpolation_.
+
 
 Uom is the unit of measure for the Property. The Uom of a Property may be specified by the name or the 
 abbreviation. The names and abbreviations of Uoms are case sensitive. 
+
+The InterpolationMode and Uom of a Property can be overriden on the stream. For more information, see `Sds Streams <https://qi-docs.readthedocs.io/en/latest/Qi_Streams.html#propertyoverrides>`__. 
 
 Supported Units of Measure
 --------------------------
@@ -1312,12 +1307,11 @@ Extend the SdsType as follows:
 SdsType API
 ----------
 
-The REST APIs provide programmatic access to read and write SDS data. The APIs in this section 
-interact with SdsTypes. When working in .NET convenient SDS Client libraries are available. 
+
+The REST APIs provide programmatic access to read and write Sds data. The APIs in this section 
+interact with SdsTypes. When working in .NET convenient Sds Client libraries are available. 
 The ISdsMetadataService interface, accessed using the ``SdsService.GetMetadataService( )`` helper, 
-defines the available functions. See
-`SDS Types <https://qi-docs.readthedocs.io/en/latest/Qi_Types.html>`__.
-for general SdsType information.
+defines the available functions. See Types_ for general SdsType information.
 
 
 ***********************
@@ -1788,7 +1782,7 @@ Response body
 
 Creates the specified type. If a type with the same Id already exists, the definition of the type is updated.
 
-Note that a type cannot be updated if any streams are 
+Note that a type cannot be updated if any streams or views are 
 associated with it. Also, certain parameters, including the type id, cannot be changed after 
 they are defined.
 
@@ -1837,7 +1831,7 @@ they are defined.
 ``Delete Type``
 ------------
 
-Deletes a type from the specified tenant and namespace. Note that a type cannot be deleted if any streams reference it.
+Deletes a type from the specified tenant and namespace. Note that a type cannot be deleted if any streams or views reference it.
 
 **Request**
 
