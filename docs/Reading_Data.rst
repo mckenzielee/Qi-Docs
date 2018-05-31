@@ -7,7 +7,7 @@ The REST APIs provide programmatic access to read and write data. This section i
 the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by :ref:`QiType_topic`,  
 :ref:`Sds_View_topic`, :ref:`Qi_Filter_expressions_topic`, and :ref:`Qi_Table_format_topic`.
 
-If you are working in a .NET environment, convenient Sds Client libraries are available. 
+If you are working in a .NET environment, convenient SDS Client libraries are available. 
 The ``ISdsDataServiceinterface``, which is accessed using the ``SdsService.GetDataService()`` helper, 
 defines the functions that are available.
 
@@ -55,7 +55,7 @@ responses do not include any values that are equal to the default value for thei
 Verbose json responses include all values, including defaults, in the returned json payload. To specify 
 verbose json return, add the header ``Accept-Verbosity`` with a value of ``verbose`` to the request.  
 
-To specify Sds format, set the ``Accept`` header in the request to ``application/Sds``.
+To specify SDS format, set the ``Accept`` header in the request to ``application/Sds``.
 
 Indexes and reading data
 ------------------------
@@ -144,7 +144,8 @@ and around the start and end index for window values. The following are valid va
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 | ExactOrCalculated | 3                                 | Results include the event at the specified index boundary. If |
 |                   |                                   | no stored event exists at that index, one is calculated based |
-|                   |                                   | on the index type and SdsStreamBehavior settings.             |
+|                   |                                   | on the index type and interpolation and extrapolation         |
+|                   |                                   | settings.                                                     |
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 
 SdsSearchMode
