@@ -4,8 +4,8 @@ Search Examples
 This topic presents several query examples you can use to perform more complex searches.
 
 
-Basic Querying 
----------------
+Perform a basic query 
+---------------------
 
 By default, specifying one or more strings in the query searches all
 object fields for the strings in the query.
@@ -36,8 +36,8 @@ object fields for the strings in the query.
 
   GetStreamsAsync(query:”pump pressure”);
 
-Searching On Specific Fields
-----------------------------
+Search specific fields
+-----------------------
 
 You can qualify which fields are searched by using the following
 syntax: 
@@ -62,8 +62,8 @@ be lowercase; however, the field value is not case sensitive.
 
   GetStreamsAsync(query:”name:pump name:pressure”);
 
-Phrase Search
--------------
+Search for a phrase
+-------------------
 
 The search engine automatically searches on strings delimited by
 whitespace and dashes (with the exception of identifier fields like Id
@@ -91,7 +91,7 @@ or TypeId fields). To search for values that include delimiters, enclose the val
 
   GetStreamsAsync(query:”\\”pump pressure\\””);
 
-Wildcard Search
+Wildcard search
 ---------------
 
 You can use the ‘\*’ character as a wildcard to specify an incomplete
@@ -136,8 +136,8 @@ Note the following restrictions to wildcard searches:
   GetStreamsAsync(query:”log\*”);
 
 
-Logical Operators and Complex Multi-Term Search
------------------------------------------------
+Use logical operators for complex multiple-term searches
+--------------------------------------------------------
 
 You can use the AND, OR, and NOT operators to build complex search terms.
 In addition, you can specify the order of operations using parentheses.
