@@ -127,13 +127,13 @@ Note the following restrictions to wildcard searches:
 
 ::
 
-  GET api/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams?query=log\*
+  GET api/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams?query=log*
 
 **C# example**
 
 ::
 
-  GetStreamsAsync(query:”log\*”);
+  GetStreamsAsync(query:”log*”);
 
 
 Use logical operators for complex multiple-term searches
