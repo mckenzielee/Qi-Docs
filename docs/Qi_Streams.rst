@@ -398,6 +398,8 @@ The following changes are permitted:
 •	Name
 •	Description
 •	Indexes
+•	InterpolationMode
+•	ExtrapolationMode
 •   PropertyOverrides
 
 Unpermitted changes result in an error.
