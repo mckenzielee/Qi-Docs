@@ -397,7 +397,8 @@ The following changes are permitted:
 
 •	Name
 •	Description
-•  PropertyOverrides
+•	Indexes
+•   PropertyOverrides
 
 Unpermitted changes result in an error.
 
