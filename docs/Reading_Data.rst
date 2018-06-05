@@ -4,15 +4,10 @@ Reading data
 ============
 
 The REST APIs provide programmatic access to read and write data. This section identifies and describes 
-the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by  
+the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by :ref:`QiType_topic`,  
 :ref:`Sds_View_topic`, :ref:`Qi_Filter_expressions_topic`, and :ref:`Qi_Table_format_topic`.
 
-
-The REST APIs provide programmatic access to read and write Sds data. This section identifies and describes 
-the APIs used to read :ref:`Qi_Stream_topic` data. Results are influenced by  
-:ref:`Sds_View_topic`.
-
-If you are working in a .NET environment, convenient Sds Client libraries are available. 
+If you are working in a .NET environment, convenient SDS Client libraries are available. 
 The ``ISdsDataServiceinterface``, which is accessed using the ``SdsService.GetDataService()`` helper, 
 defines the functions that are available.
 
@@ -60,18 +55,40 @@ responses do not include any values that are equal to the default value for thei
 Verbose json responses include all values, including defaults, in the returned json payload. To specify 
 verbose json return, add the header ``Accept-Verbosity`` with a value of ``verbose`` to the request.  
 
-To specify Sds format, set the ``Accept`` header in the request to ``application/Sds``.
+To specify SDS format, set the ``Accept`` header in the request to ``application/Sds``.
 
 Indexes and reading data
 ------------------------
 
 Most read operations take at least one index as a parameter. Indexes may be specified as strings, or, 
 when using the Sds Client libraries, the index may be passed as-is to read methods that take the index 
-type as a generic argument. Additional details about working with indexes can be found on the :ref:`Indexes_topic` page. 
+type as a generic argument. Additional details about working with indexes can be found on the :ref:`Indexes_topic` page.
 
+Read Characteristics
+--------------------
 
-SdsView and SdsStreamBehavior
------------------------------
+When data is requested at an index for which no stored event exists, the read characterisitics determine 
+whether the result is an error, null event, interpolated event, or extrapolated event. The combination of 
+the type of the index and the interpolation and extrapolation modes of the SdsType and the SdsStream 
+determine the read characteristics. For more information on read characteristics, 
+see :ref:`QiType_topic` and :ref:`Qi_Stream_topic`.
+
+**Methods affected by Read Characteristics**
+
+`GetValueAsync <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html#getvalueasync>`__
+  Read characteristics are applied when the index is between, before, or after all data.
+
+`GetValuesAsync <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html#getvaluesasync>`__
+  Read characteristics applied when an index determined by the call is between, before, or after all data.
+
+`GetWindowValuesAsync <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html#getwindowvaluesasync>`__
+  Read characteristics applied to indexes between, before, or after data when the calls Boundary parameter is set to ExactOrCalculated.
+
+`GetRangeValuesAsync <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html#getrangevaluesasync>`__
+  Read characteristics applied to indexes between, before, or after data when the calls Boundary parameter is set to ExactOrCalculated.
+
+SdsView and reading data
+------------------------
 
 All reads support specifying a SdsView identifier in the query string to shape the results of the read:
 
@@ -79,9 +96,9 @@ All reads support specifying a SdsView identifier in the query string to shape t
 
 Working with views is covered in detail in the :ref:`Sds_View_topic` section.
 
-When data is requested at an index for which no stored event exists, the type of the index and 
-the SdsStreamBehavior for the stream determine whether the result is an error, null event, interpolated event, 
-or extrapolated event. SdsStreamBehavior is discussed in the Get Value, GetValues and GetWindowValues samples.
+When data is requested with a SdsView the read characteristics defined by the *target type* of the SdsView 
+determine what is returned. The read characteristics are discussed in the *Get Value*, 
+*GetValues* and *GetWindowValues* code samples.
 
 Filter Expressions
 ------------------
@@ -127,7 +144,8 @@ and around the start and end index for window values. The following are valid va
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 | ExactOrCalculated | 3                                 | Results include the event at the specified index boundary. If |
 |                   |                                   | no stored event exists at that index, one is calculated based |
-|                   |                                   | on the index type and SdsStreamBehavior settings.             |
+|                   |                                   | on the index type and interpolation and extrapolation         |
+|                   |                                   | settings.                                                     |
 +-------------------+-----------------------------------+---------------------------------------------------------------+
 
 SdsSearchMode
