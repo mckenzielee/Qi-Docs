@@ -63,7 +63,7 @@ Register an application in OSIsoft Cloud Services
 
 3. Click the **Add** 
 
-.. image:: images/Add_Button.png button.  
+.. image:: images/Add_Button.png
 
 
 4. Specify a search query and select **Search** to find the application from the directory in the popup window.  
