@@ -61,10 +61,9 @@ Register an application in OSIsoft Cloud Services
 
 2. Navigate to the **Client Keys** page in the left-hand navigation pane. 
 
-3. Click the **Add** 
+3. Click the **Add** button |add_Button|
 
-.. image:: images/Add_Button.png
-
+.. |add_button| image:: images/Add_Button.png
 
 4. Specify a search query and select **Search** to find the application from the directory in the popup window.  
    The search query can be the name of either the application or the application ID, which is a GUID. 
