@@ -44,7 +44,7 @@ read characteristics determines how the returned event is calculated.
 ::
 
   api/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/Simple/Data/GetValue 
-     ?index=2017-11-23T13:00:00Z``
+     ?index=2017-11-23T13:00:00Z
 
 The response will contain the event stored at the specified index:
 
