@@ -126,3 +126,8 @@ of "OSI", you would use ``"Manufacturer:OSI"``.  If you want to search for a str
 any value, you could drop the quotes and the colon and search for ``Manufacturer*``.  While searching for a key with 
 a wildcard value is supported, searching on a value with a wildcard key is not supported.
 
+.. toctree::
+   :maxdepth 2
+
+   ocs_search_ex
+
