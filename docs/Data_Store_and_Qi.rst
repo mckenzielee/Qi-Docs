@@ -24,6 +24,7 @@ The Data store is hosted by OSIsoft, LLC, and provides an easy-to-use and access
    indexes
    Reading_Data
    Writing_Data
+   Searching
    Filter Expressions
    table_format
    
