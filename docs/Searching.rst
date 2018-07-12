@@ -1,3 +1,5 @@
+.. _Qi_Searching_topic:
+
 Searching for streams
 =====================
 
