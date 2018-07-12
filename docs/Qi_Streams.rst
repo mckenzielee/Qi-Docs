@@ -217,7 +217,7 @@ for information about specifying the search parameter.
   The namespace identifier
 ``string query``
   An optional parameter representing a string search. 
-  See `Searching for SdsStreams :ref:`Qi_Searching_topic`
+  See :ref:`Qi_Searching_topic`
   for information about specifying the search parameter.
 ``int skip``
   An optional parameter representing the zero-based offset of the first SdsStream to retrieve. 
