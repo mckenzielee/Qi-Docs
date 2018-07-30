@@ -1,12 +1,17 @@
 Compression
 ===========
-To more efficiently utilize network bandwidth the OCS Sequential Data Store supports ``gzip`` and ``deflate`` compression schemes for reading data and writing data through the REST API
+To more efficiently utilize network bandwidth the OCS Sequential Data Store REST API supports compression for reading and writing data
+
+Supported compression schemes
+-----------------------------
+``gzip`` and ``deflate`` compression schemes are currently supported
 
 Request compression (writing data)
 ----------------------------------
-HTTP request body content can be compressed using the supported compression schemes. 
-To indicate that the content of a request is compressed, the compression scheme should be specified in the ``Content-Encoding`` HTTP header of the request.
+HTTP request body content can be compressed using the `Supported compression schemes`_. The ``Content-Encoding`` HTTP header should be used to specify the compression scheme of compressed-content requests
 
 Response compression (reading data)
 -----------------------------------
-When reading data 
+Compressed responses can be requested from the REST API by specifying the desired compression scheme using the ``Accept-Encoding`` HTTP header.
+Compressed responses from the REST API will include a ``Content-Encoding`` HTTP header indicating the compression scheme used.
+*Note that specifying a compression scheme through the use of the ``Accept-Encoding`` HTTP header does not guarantee a compressed response. Always refer to presence and value of the ``Content-Encoding`` HTTP header of the response to properly decode the response content* 
