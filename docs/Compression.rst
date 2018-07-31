@@ -15,8 +15,8 @@ The ``Content-Encoding`` HTTP header should be used to specify the compression s
 
 Response compression (reading data)
 -----------------------------------
-Compressed responses can be requested from the REST API by specifying the desired compression scheme using the ``Accept-Encoding`` HTTP header.
+Compressed responses can be requested from the REST API by specifying one of the `Supported compression schemes`_ using the ``Accept-Encoding`` HTTP header.
 
-Compressed responses from the REST API will include a ``Content-Encoding`` HTTP header indicating the compression scheme used.
+Compressed responses from the REST API will include a ``Content-Encoding`` HTTP header indicating the compression scheme used to compress the response content.
 
 *Note that specifying a compression scheme through the use of the ``Accept-Encoding`` HTTP header does not guarantee a compressed response. Always refer to presence and value of the ``Content-Encoding`` HTTP header of the response to properly decode the response content.* 
