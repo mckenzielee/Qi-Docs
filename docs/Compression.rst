@@ -1,6 +1,6 @@
 Compression
 ===========
-To more efficiently utilize network bandwidth the OCS Sequential Data Store REST API supports compression for reading and writing data.
+To more efficiently utilize network bandwidth the OCS Sequential Data Store REST API supports compression for :ref:`Reading_Data_API` and :ref:`Writing_Data_API`.
 
 Supported compression schemes
 -----------------------------
