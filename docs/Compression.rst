@@ -4,8 +4,8 @@ To more efficiently utilize network bandwidth the OCS Sequential Data Store REST
 
 Supported compression schemes
 -----------------------------
--``gzip``
--``deflate``
+- ``gzip``
+- ``deflate``
 
 Request compression (writing data)
 ----------------------------------
