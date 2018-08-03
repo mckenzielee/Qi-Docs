@@ -1,6 +1,6 @@
 Compression
 ===========
-To more efficiently utilize network bandwidth the OCS Sequential Data Store supports compression for :ref:`Reading_Data_API` and :ref:`Writing_Data_API`.
+To more efficiently utilize network bandwidth the OCS Sequential Data Store supports compression for `API calls for reading data <https://qi-docs-rst.readthedocs.org/en/latest/Reading_Data_API.html>`__ and `API calls for writing data <https://qi-docs-rst.readthedocs.org/en/latest/Writing_Data_API.html>`__
 
 Supported compression schemes
 -----------------------------
