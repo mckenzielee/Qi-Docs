@@ -22,7 +22,31 @@ representing the key have their ``SdsTypeProperty.IsKey`` field set to true.
 Secondary indexes are defined on SdsStreams and are applied to a single property. You can define many 
 secondary indexes. Secondary index values need not be unique.
 
+The following table contains supported index types:
 
+
+=======================  =====
+Type                     SdsTypeCode
+-----------------------  -----
+Boolean                  3
+Byte                     6
+Char                     4
+DateTime                 16
+DateTimeOffset           20
+Decimal                  15
+Double                   14
+Guid                     19
+Int16                    7
+Int32                    9
+Int64                    11
+SByte                    5
+Single                   13
+String                   18
+TimeSpan                 21
+UInt16                   8
+UInt32                   10
+UInt64                   12
+=======================  =====
 
 Compound Indexes
 ----------------
