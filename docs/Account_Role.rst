@@ -62,7 +62,7 @@ Retrieves an Account Role based on the specified Account Id and Role Id.
 	The Role identifier for this request
 
 **Security**
-	Allowed by Account Administrator :ref:`Role <RoleObj>`
+	Authorized for Account Administrator role
 
 **Returns**
 	The :ref:`Role <RoleObj>` with Id roleId
@@ -96,7 +96,7 @@ Retrieves all Account Roles for the specified Account Id.
 	Unsupported parameter
 
 **Security**
-	If the current principle has a Cluster role or is an Account Administrator for the specified Account
+	Authorized for Account Member role
 
 **Returns**
 	An array of :ref:`Role <RoleObj>` objects 
@@ -126,7 +126,7 @@ Create an Account Role
 	The :ref:`Role <RoleObj>` for this request
 
 **Security**
-	Allowed by Account Administrator :ref:`Role <RoleObj>`
+	Authorized for Account Administrator role
 
 **Returns**
 	The :ref:`Role <RoleObj>`
@@ -158,7 +158,7 @@ Update a Role by its Role Id
 	The :ref:`Role <RoleObj>` for this request.
 
 **Security**
-	Allowed by Account Administrator :ref:`Role <RoleObj>`
+	Authorized for Account Administrator role
 
 **Returns**
 	The :ref:`Role <RoleObj>` with Id roleId
@@ -188,7 +188,7 @@ Delete any Account scoped, non built-in Role by its Role Id
 	The Role identifier for this request
 
 **Security**
-	Allowed If the current principle has a Account Administrator role
+	Authorized for Account Administrator role
 
 **Returns**
 	HTTP status code - 200 on success, other HTTP status codes on failure
