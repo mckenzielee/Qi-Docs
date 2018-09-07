@@ -1,3 +1,5 @@
+C:\NexusProject3\Source\Tools\Documentation\bin\Debug\net462\OSIsoft.Common.xml
+C:\NexusProject3\Source\Tools\Documentation\bin\Debug\net462\OSIsoft.AccessControl.xml
 Management
 =======================================================
 

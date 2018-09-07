@@ -19,6 +19,8 @@ An OCS Customer Tenant Account
 	Date this Tenant was last updated.
 ``bool IsCustomerOwnedDirectory``
 	Specifies whether the Directory for this Tenant is owned by a customer (true) or managed on their behalf by OSIsoft (false).
+``string Icon``
+	Gets or sets the base64 encoded PNG icon for this Account.
 ``[FeatureState] Features``
 	List of Feature States for this Tenant. Returned during get calls.
 
@@ -36,6 +38,7 @@ An OCS Customer Tenant Account
 	"Created": "0001-01-01T00:00:00",
 	"LastUpdated": "0001-01-01T00:00:00",
 	"IsCustomerOwnedDirectory": false,
+	"Icon": "icon",
 	"Features": []
  }
 
@@ -89,6 +92,36 @@ Check if a tenant with a specific id exists
 
 **Security**
 	Allowed by Account Member :ref:`Role <RoleObj>`
+
+**Returns**
+	HttpStatusCode OK or HttpStatusCode NotFound
+
+
+
+|
+
+**********************
+
+``UpdateTenant()``
+--------------------------------------------------------------------
+
+update tenant object
+
+**Http**
+
+::
+
+	PUT api/Tenants/{tenantId}
+
+**Parameters**
+
+``string tenantId``
+	The :ref:`Tenant <TenantObj>` identifier for this request
+``Tenant tenant``
+	The :ref:`Tenant <TenantObj>` identifier for this request
+
+**Security**
+	Allowed by Account Administrator :ref:`Role <RoleObj>`
 
 **Returns**
 	HttpStatusCode OK or HttpStatusCode NotFound

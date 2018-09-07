@@ -11,6 +11,10 @@ A Namespace is a collection of Data Streams.
 	Name of this Namespace. Unique within a Tenant's Namespaces.
 ``string TenantId``
 	GUID of the Tenant that this Namespace corresponds to
+``string Region``
+	The region that the namespace is provisioned in
+``string Self``
+	The namespace's URI
 ``string Description``
 	Description of this Namespace.
 ``string TierId``
@@ -23,6 +27,8 @@ A Namespace is a collection of Data Streams.
 	Current state of this Namespace.
 ``OwnerTrustee Owner``
 	Owner :ref:`Trustee <TrusteeObj>` of this Namespace.
+``AccessControlList AccessControl``
+	The :ref:`AccessControlList <AccessControlListObj>` that defines Access Control for this :ref:`Namespace <NamespaceObj>`
 ``AccessControlList AccessControlList``
 	Access Control List.
 
@@ -36,6 +42,8 @@ A Namespace is a collection of Data Streams.
  {
 	"Id": "id",
 	"TenantId": "tenantid",
+	"Region": "region",
+	"Self": "self",
 	"Description": "description",
 	"TierId": "tierid",
 	"ThroughputUnits": 0,
@@ -45,6 +53,9 @@ A Namespace is a collection of Data Streams.
 		"Type": 2,
 		"TenantId": "string",
 		"ApplicationId": "string"
+	 },
+	"AccessControl":  {
+		"RoleTrusteeAccessControlEntries": []
 	 },
 	"AccessControlList":  {
 		"RoleTrusteeAccessControlEntries": []
@@ -70,6 +81,8 @@ Returns all :ref:`Namespaces <NamespaceObj>` owned by the specified tenant that 
 
 ``string tenantId``
 	The :ref:`Tenant <TenantObj>` identifier for the request.
+``string include``
+	An optional parameter specifying which attatched properties to include
 
 **Security**
 	A :ref:`Namespace <NamespaceObj>` can only be retrieved if the current principle has Read access.
@@ -127,7 +140,7 @@ Creates a namespace.
 **Parameters**
 
 ``string tenantId``
-	The idenfifier for the account the namespace is to be created for.
+	The identifier for the account the namespace is to be created for.
 ``Namespace namespaceObj``
 	The :ref:`Namespace <NamespaceObj>` to be created.
 

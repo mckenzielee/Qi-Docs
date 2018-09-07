@@ -274,10 +274,10 @@ Resets the password for the specified user.
 
 **********************
 
-``GetAllRolesForUser()``
+``GetRolesForUser()``
 --------------------------------------------------------------------
 
-Retrieves all roles for the specified user.
+Retrieves roles for the specified user.
 
 **Http**
 
@@ -342,7 +342,7 @@ Adds an account role to the specified user.
 
 **********************
 
-``RemoveAccountRoleFromUser()``
+``RemoveRoleFromUser()``
 --------------------------------------------------------------------
 
 Removes a role from a user.
