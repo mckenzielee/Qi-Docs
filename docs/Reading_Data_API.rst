@@ -916,6 +916,652 @@ Adding a filter to the request means only events that meet the filter criteria a
 
   Allowed for administrator and user accounts
 
+***********************
+
+``Get Data Joins Values``
+--------------------
+
+Get Data Joins Values returns multiple data streams specified in your API call. 
+
+To join multiple streams, for example Simple1 and Simple2, assume that Simple 1 presents the following data:
+
+::
+  
+  [  
+     {  
+        "Time":"2017-11-23T11:00:00Z",
+        "Measurement":10.0
+     },
+     {  
+        "Time":"2017-11-23T13:00:00Z",
+        "Measurement":20.0
+     },
+     {  
+        "Time":"2017-11-23T14:00:00Z",
+        "Measurement":30.0
+     },
+     {  "Time":"2017-11-23T16:00:00Z",
+        "Measurement":40.0
+     }
+  ] 
+
+
+And assume that Simple2 presents the following data:
+
+::
+  
+  [  
+     {  
+        "Time":"2017-11-23T12:00:00Z",
+        "Measurement":50.0
+     },
+     {  
+        "Time":"2017-11-23T14:00:00Z",
+        "Measurement":60.0
+     },
+     {  
+        "Time":"2017-11-23T15:00:00Z",
+        "Measurement":70.0
+     },
+     {  "Time":"2017-11-23T17:00:00Z",
+        "Measurement":80.0
+     }
+  ] 
+
+
+**GET Requests**
+
+The following are responses for various Joins request options:
+
+
+**InnerJoin Request**
+
+::
+
+  GET /api/Tenants/{tenantId}/Namespaces/{namespaceId}/Data/
+      GetWindowValues?streams=Simple1,Simple2&joinMode=inner
+      &startIndex=0001-01-01T00:00:00.0000000&endIndex=9999-12-31T23:59:59.9999999
+
+
+
+
+**Parameters**
+
+``string tenantId``
+  The tenant identifier
+``string namespaceId``
+  The namespace identifier
+``string streamId``
+  The stream identifier
+``joinMode``
+  Type of join, i.e. inner, outer, etc.
+
+
+
+
+
+**Response**
+
+  The response includes a status code and a response body containing multiple serialized events.
+
+
+
+
+**Response body**
+
+::
+  
+  
+
+  [  
+    [
+        {
+            "Time": "2017-11-23T14:00:00Z",
+            "Measurement": 30
+        },
+        {
+            "Time": "2017-11-23T14:00:00Z",
+            "Measurement": 60
+        }
+    ]
+  ] 
+
+
+Measurements from both streams with common indexes.
+
+
+  
+**OuterJoin Request**
+
+::
+
+  GET /api/Tenants/{tenantId}/Namespaces/{namespaceId}/Data/
+      GetWindowValues?streams=Simple1,Simple2&joinMode=outer
+      &startIndex=0001-01-01T00:00:00.0000000&endIndex=9999-12-31T23:59:59.9999999
+
+
+
+**Parameters**
+
+``string tenantId``
+  The tenant identifier
+``string namespaceId``
+  The namespace identifier
+``string streamId``
+  The stream identifier
+``joinMode``
+  Type of join, i.e. inner, outer, etc.
+
+
+
+**Response**
+
+  The response includes a status code and a response body containing multiple serialized events.
+
+
+
+
+
+**Response body**
+
+
+::
+  
+  
+
+  [  
+    [
+      {  
+            "Time": "2017-11-23T11:00:00Z",
+            "Measurement": 10
+        },
+        null
+    ],
+    [
+        null,
+        {
+            "Time": "2017-11-23T12:00:00Z",
+            "Measurement": 50
+        }
+    ],
+    [
+        {
+            "Time": "2017-11-23T13:00:00Z",
+            "Measurement": 20
+        },
+        null
+    ],
+    [
+        {
+            "Time": "2017-11-23T14:00:00Z",
+            "Measurement": 30
+        },
+        {
+            "Time": "2017-11-23T14:00:00Z",
+            "Measurement": 60
+        }
+    ],
+    [
+        null,
+        {
+            "Time": "2017-11-23T15:00:00Z",
+            "Measurement": 70
+     },
+   ],
+   [
+     {  
+            "Time":"2017-11-23T16:00:00Z",
+            "Measurement":40.0
+     },
+        null
+   ],
+     {  
+        null,
+        {
+            "Time":"2017-11-23T17:00:00Z",
+            "Measurement":80.0
+      }
+    ]
+  ] 
+
+
+ 
+
+
+All Measurements from both Streams, with default values at indexes where a Stream does not have a value.
+
+
+**InterpolatedJoin Request**
+
+::
+
+  GET /api/Tenants/{tenantId}/Namespaces/{namespaceId}/Data/
+      GetWindowValues?streams=Simple1,Simple2&joinMode=interpolated
+      &startIndex=0001-01-01T00:00:00.0000000&endIndex=9999-12-31T23:59:59.9999999
+
+
+
+**Parameters**
+
+``string tenantId``
+  The tenant identifier
+``string namespaceId``
+  The namespace identifier
+``string streamId``
+  The stream identifier
+``joinMode``
+  Type of join, i.e. inner, outer, etc.
+
+
+
+**Response**
+
+  The response includes a status code and a response body containing multiple serialized events.
+
+
+
+
+
+**Response body**
+
+
+::
+  
+  
+
+  [  
+    [
+      {  
+            "Time": "2017-11-23T11:00:00Z",
+            "Measurement": 10
+        },
+        {
+            "Time": "2017-11-23T11:00:00Z",
+            "Measurement": 50
+        }
+    ],
+    [
+        {
+            "Time": "2017-11-23T12:00:00Z",
+            "Measurement": 15
+        },
+        {
+            "Time": "2017-11-23T12:00:00Z",
+            "Measurement": 50
+        }
+    ],
+    [
+        {
+            "Time": "2017-11-23T13:00:00Z",
+            "Measurement": 20
+        },
+        {
+            "Time": "2017-11-23T13:00:00Z",
+            "Measurement": 55
+        }
+    ],
+    [
+        {
+            "Time": "2017-11-23T14:00:00Z",
+            "Measurement": 30
+        },
+        {
+            "Time": "2017-11-23T14:00:00Z",
+            "Measurement": 60
+        }
+    ],
+    [
+        {
+            "Time": "2017-11-23T15:00:00Z",
+            "Measurement": 35
+        },
+        {
+            "Time": "2017-11-23T15:00:00Z",
+            "Measurement": 70
+        }
+    ],
+    [
+        {
+            "Time": "2017-11-23T16:00:00Z",
+            "Measurement": 40
+        },
+        {
+            "Time": "2017-11-23T16:00:00Z",
+            "Measurement": 75
+        }
+    ],
+    [
+        {
+            "Time": "2017-11-23T17:00:00Z",
+            "Measurement": 40
+        },
+        {
+            "Time": "2017-11-23T17:00:00Z",
+            "Measurement": 80
+      }
+    ]
+  ] 
+
+
+
+All Measurements from both Streams with missing values interpolated. If the missing values are between valid Measurements within a Stream, they are interpolated. If the missing values are outside of the boundary values, they are extrapolated.
+
+
+
+**MergeLeftJoin Request**
+
+::
+
+  GET /api/Tenants/{tenantId}/Namespaces/{namespaceId}/Data/
+      GetWindowValues?streams=Simple1,Simple2&joinMode=mergeleft
+      &startIndex=0001-01-01T00:00:00.0000000&endIndex=9999-12-31T23:59:59.9999999
+
+
+
+**Parameters**
+
+``string tenantId``
+  The tenant identifier
+``string namespaceId``
+  The namespace identifier
+``string streamId``
+  The stream identifier
+``joinMode``
+  Type of join, i.e. inner, outer, etc.
+
+
+
+**Response**
+
+  The response includes a status code and a response body containing multiple serialized events.
+
+
+
+
+
+**Response body**
+
+
+::
+  
+  
+
+  [  
+      {  
+        "Time": "2017-11-23T11:00:00Z",
+        "Measurement": 10
+    },
+    {
+        "Time": "2017-11-23T12:00:00Z",
+        "Measurement": 50
+    },
+    {
+        "Time": "2017-11-23T13:00:00Z",
+        "Measurement": 20
+    },
+    {
+        "Time": "2017-11-23T14:00:00Z",
+        "Measurement": 30
+    },
+    {
+        "Time": "2017-11-23T15:00:00Z",
+        "Measurement": 70
+    },
+    {
+        "Time": "2017-11-23T16:00:00Z",
+        "Measurement": 40
+    },
+    {
+        "Time": "2017-11-23T17:00:00Z",
+        "Measurement": 80
+      }
+  ] 
+
+
+
+This is similar to OuterJoin, but value at each index is the first available value at that index when iterating the given list of streams from left to right.
+
+
+
+
+
+**MergeRightJoin Request**
+
+::
+
+  GET /api/Tenants/{tenantId}/Namespaces/{namespaceId}/Data/
+      GetWindowValues?streams=Simple1,Simple2&joinMode=mergeright
+      &startIndex=0001-01-01T00:00:00.0000000&endIndex=9999-12-31T23:59:59.9999999
+
+
+**Parameters**
+
+``string tenantId``
+  The tenant identifier
+``string namespaceId``
+  The namespace identifier
+``string streamId``
+  The stream identifier
+``joinMode``
+  Type of join, i.e. inner, outer, etc.
+
+
+**Response**
+
+  The response includes a status code and a response body containing multiple serialized events.
+
+
+
+
+
+
+**Response body**
+
+
+::
+  
+  
+
+  [  
+    {
+        "Time": "2017-11-23T11:00:00Z",
+        "Measurement": 10
+    },
+    {
+        "Time": "2017-11-23T12:00:00Z",
+        "Measurement": 50
+    },
+    {
+        "Time": "2017-11-23T13:00:00Z",
+        "Measurement": 20
+    },
+    {
+        "Time": "2017-11-23T14:00:00Z",
+        "Measurement": 60
+    },
+    {
+        "Time": "2017-11-23T15:00:00Z",
+        "Measurement": 70
+    },
+    {
+        "Time": "2017-11-23T16:00:00Z",
+        "Measurement": 40
+    },
+    {
+        "Time": "2017-11-23T17:00:00Z",
+        "Measurement": 80
+    }
+  ] 
+
+This is similar to OuterJoin, but value at each index is the first available value at that index when iterating the given list of streams from right to left.
+
+
+**POST Requests**
+
+For POST requests, the response formats are similar to GET requests, but the request format is different. Except the joinMode, all other options are specified in the body.
+
+
+
+**Request body**
+
+
+::
+  
+  
+
+  [  
+      {  
+		"StreamId": "Simple1",
+		"Options": {
+			"StartIndex": "2017-11-23T11:00:00Z",
+			"EndIndex": "2017-11-23T14:00:00Z",
+			"StartBoundaryType": "Exact",
+			"EndBoundaryType": "Exact",
+			"Count": 100,
+			"Filter": ""
+		}
+	},
+	{
+		"StreamId": "Simple2",
+		"Options": {
+			"StartIndex": "2017-11-23T15:00:00Z",
+			"EndIndex": "2017-11-23T17:00:00Z",
+			"StartBoundaryType": "Exact",
+			"EndBoundaryType": "Exact",
+			"Count": 100,
+			"Filter": ""
+		}
+      }
+  ] 
+
+
+
+
+**Parameters**
+
+``string tenantId``
+  The tenant identifier
+``string namespaceId``
+  The namespace identifier
+``string streamId``
+  The stream identifier
+
+
+
+
+
+**Response**
+
+  The response includes a status code and a response body containing multiple serialized events.
+
+
+
+
+
+**Response body**
+
+
+::
+  
+  
+
+  [  
+    [
+        {
+            "Time": "2017-11-23T11:00:00Z",
+            "Measurement": 10
+        },
+        null
+    ],
+    [
+        {
+            "Time": "2017-11-23T13:00:00Z",
+            "Measurement": 20
+        },
+        null
+    ],
+    [
+        {
+            "Time": "2017-11-23T14:00:00Z",
+            "Measurement": 30
+        },
+        null
+    ],
+    [
+        null,
+        {
+            "Time": "2017-11-23T15:00:00Z",
+            "Measurement": 70
+        }
+    ],
+    [
+        null,
+        {
+            "Time": "2017-11-23T17:00:00Z",
+            "Measurement": 80
+        }
+    ]
+  ] 
+
+Notice that not all the values from Streams were included since they are restricted by individual queries for each Stream.
+
+
+
+**.NET Library**
+
+::
+
+  Task<IEnumerable<IList<T>>> GetJoinValuesAsync<T>(IEnumerable<string> streams, 
+      SdsJoinType joinMode, string startIndex, string endIndex);
+       
+  Task<IEnumerable<IList<T>>> GetJoinValuesAsync<T>(IEnumerable<string> streams, 
+      SdsJoinType joinMode, string startIndex, string endIndex, int count);
+        
+  Task<IEnumerable<IList<T>>> GetJoinValuesAsync<T>(IEnumerable<string> streams, 
+      SdsJoinType joinMode, string startIndex, string endIndex, SdsBoundaryType boundaryType, 
+      string filter);
+
+  Task<IEnumerable<IList<T>>> GetJoinValuesAsync<T>(IEnumerable<string> streams, 
+      SdsJoinType joinMode, string startIndex, string endIndex, SdsBoundaryType boundaryType, 
+      string filter, int count);
+        
+  Task<IEnumerable<IList<T>>> GetJoinValuesAsync<T>(IEnumerable<string> streams, 
+      SdsJoinType joinMode, string startIndex, SdsBoundaryType startBoundaryType, string endIndex, 
+      SdsBoundaryType endBoundaryType, string filter);
+        
+  Task<IEnumerable<IList<T>>> GetJoinValuesAsync<T>(IEnumerable<string> streams, 
+      SdsJoinType joinMode, string startIndex, SdsBoundaryType startBoundaryType, string endIndex, 
+      SdsBoundaryType endBoundaryType, string filter, int count);
+        
+  Task<IEnumerable<IList<T>>> GetJoinValuesAsync<T>(SdsJoinType joinMode, IList<SdsStreamQuery> 
+      sdsStreamsQueryOptions);
+
+  Task<IList<T>> GetMergeValuesAsync<T>(SdsMergeType joinMode, IList<SdsStreamQuery> 
+      sdsStreamsQueryOptions);
+        
+  Task<IList<T>> GetMergeValuesAsync<T>(IEnumerable<string> streams, SdsMergeType joinMode, 
+      string startIndex, string endIndex);
+        
+  Task<IList<T>> GetMergeValuesAsync<T>(IEnumerable<string> streams, SdsMergeType joinMode, 
+      string startIndex, string endIndex, int count);
+        
+  Task<IList<T>> GetMergeValuesAsync<T>(IEnumerable<string> streams, SdsMergeType joinMode, 
+      string startIndex, string endIndex, SdsBoundaryType boundaryType, string filter);
+
+  Task<IList<T>> GetMergeValuesAsync<T>(IEnumerable<string> streams, SdsMergeType joinMode, 
+      string startIndex, string endIndex, SdsBoundaryType boundaryType, string filter, int count);
+        
+  Task<IList<T>> GetMergeValuesAsync<T>(IEnumerable<string> streams, SdsMergeType joinMode, 
+      string startIndex, SdsBoundaryType startBoundaryType, string endIndex, 
+      SdsBoundaryType endBoundaryType, string filter);
+        
+  Task<IList<T>> GetMergeValuesAsync<T>(IEnumerable<string> streams, SdsMergeType joinMode, 
+      string startIndex, SdsBoundaryType startBoundaryType, string endIndex, 
+      SdsBoundaryType endBoundaryType, string filter, int count);
+ 
+
+
+
 
 ***********************
 
