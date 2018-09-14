@@ -993,7 +993,7 @@ The following are responses for various Joins request options:
   The namespace identifier
 ``string streamId``
   The stream identifier
-``joinMode``
+``SdsJoinMode joinMode``
   Type of join, i.e. inner, outer, etc.
 
 
@@ -1049,7 +1049,7 @@ Measurements from both streams with common indexes.
   The namespace identifier
 ``string streamId``
   The stream identifier
-``joinMode``
+``SdsJoinMode joinMode``
   Type of join, i.e. inner, outer, etc.
 
 
@@ -1149,7 +1149,7 @@ All Measurements from both Streams, with default values at indexes where a Strea
   The namespace identifier
 ``string streamId``
   The stream identifier
-``joinMode``
+``SdsJoinMode joinMode``
   Type of join, i.e. inner, outer, etc.
 
 
@@ -1266,7 +1266,7 @@ All Measurements from both Streams with missing values interpolated. If the miss
   The namespace identifier
 ``string streamId``
   The stream identifier
-``joinMode``
+``SdsJoinMode joinMode``
   Type of join, i.e. inner, outer, etc.
 
 
@@ -1342,7 +1342,7 @@ This is similar to OuterJoin, but value at each index is the first available val
   The namespace identifier
 ``string streamId``
   The stream identifier
-``joinMode``
+``SdsJoinMode joinMode``
   Type of join, i.e. inner, outer, etc.
 
 
@@ -1445,6 +1445,8 @@ For POST requests, the response formats are similar to GET requests, but the req
   The namespace identifier
 ``string streamId``
   The stream identifier
+``SdsJoinMode joinMode``
+  Type of join, i.e. inner, outer, etc.
 
 
 
