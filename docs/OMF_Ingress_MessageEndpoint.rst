@@ -12,10 +12,16 @@ of the message is performed asynchronously and any error is logged.
 
 ***************************
 
-``POST api/omf``
+``POST api/tenants/{tenantId}/namespaces/{namespaceId}/omf``
 -------------------------------------
 
 Post an OMF message.
+
+Parameters:
+``tenantId``
+  Unique Id for the tenant.   
+``namespaceId``
+  Unique Id for the namespace. 
 
 **Headers**
   OMF headers.

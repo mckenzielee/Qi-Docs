@@ -12,3 +12,4 @@ in this and subsequent topics:
 
 .. toctree::
    OMF_Ingress_Specification.rst
+   OMF_Ingress_MessageEndpoint.rst

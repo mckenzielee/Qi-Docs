@@ -36,9 +36,14 @@ Subscription information is contained in an object called Subscription which has
 | TopicId              | string                  | Unique Id for the Topic we are         |
 |                      |                         | subscribing to.                        |
 +----------------------+-------------------------+----------------------------------------+
-| TopicTenantId        | string                  | Identifies the owner of the Topic.     |
+| TopicTenantId        | string                  | Identifies the tenant for the Topic.   |
 +----------------------+-------------------------+----------------------------------------+
-| TenantId             | string                  | Identifies the owner of the            |
+| TopicNamespaceId     | string                  | Identifies the namespace for the Topic.|
++----------------------+-------------------------+----------------------------------------+
+| TenantId             | string                  | Identifies the tenant for the          |
+|                      |                         | Subscription.                          |
++----------------------+-------------------------+----------------------------------------+
+| NamespaceId          | string                  | Identifies the tenant for the          |
 |                      |                         | Subscription.                          |
 +----------------------+-------------------------+----------------------------------------+
 | IsRevoked            | boolean                 | Revocation status of the Subscription. |
@@ -60,7 +65,7 @@ Subscription information is contained in an object called Subscription which has
 
 ***************
 
-``GET api/tenants/{tenantId}/subscriptions/count``
+``GET api/tenants/{tenantId}/namespaces/{namespaceId}/subscriptions/count``
 -------------------------------------------------
 
 Get the number of subscriptions for a tenant.  
@@ -69,6 +74,8 @@ Get the number of subscriptions for a tenant.
 
 ``tenantId``
   Unique Id for the tenant. 
+``namespaceId``
+  Unique Id for the namespace.   
 
 **Returns**
 
@@ -76,7 +83,7 @@ An integer count of subscriptions.
 
 *****************
 
-``GET api/tenants/{tenantId}/subscriptions``
+``GET api/tenants/{tenantId}/namespaces/{namespaceId}/subscriptions``
 ---------------------------------------------
 
 Get all subscriptions for a tenant. 
@@ -85,14 +92,16 @@ Get all subscriptions for a tenant.
 
 ``tenantId``
   Unique Id for the tenant. 
-
+``namespaceId``
+  Unique Id for the namespace. 
+  
 **Returns**
 
 An array of Subscription objects. 
 
 *********************
 
-``GET api/tenants/{tenantId}/subscriptions/{subscriptionId}``
+``GET api/tenants/{tenantId}/namespaces/{namespaceId}/subscriptions/{subscriptionId}``
 ---------------------------------------------------------------
 
 Get a specific subscription. 
@@ -101,6 +110,8 @@ Get a specific subscription.
 
 ``tenantId``
   Unique Id for the tenant. 
+``namespaceId``
+  Unique Id for the namespace. 
 ``subscriptionId``
   Unique Id for the subscription. 
 
@@ -110,7 +121,7 @@ A Subscription object that was found.
 
 *************************
 
-``GET api/tenants/{tenantId}/subscriptions/{subscriptionId}/{secondsUntilExpiration}``
+``GET api/tenants/{tenantId}/namespaces/{namespaceId}/subscriptions/{subscriptionId}/{secondsUntilExpiration}``
 ---------------------------------------------------------------------------------------
 
 Get a security token for a subscription. 
@@ -119,6 +130,8 @@ Get a security token for a subscription.
 
 ``tenantId``
   Unique Id for the tenant. 
+``namespaceId``
+  Unique Id for the namespace. 
 ``subscriptionId``
   Unique Id for the subscription. 
 ``secondsUntilExpiration``
@@ -130,7 +143,45 @@ A Subscription object that was found.
 
 *****************
 
-``POST api/tenants/{tenantId}/subscription``
+``GET api/tenants/{tenantId}/namespaces/{namespaceId}/accesscontrol/subscriptions``
+--------------------------------------------
+
+Gets the default Access Control List for new subscriptions
+
+**Parameters**
+
+``tenantId``
+  Unique Id for the tenant. 
+``namespaceId``
+  Unique Id for the namespace. 
+
+**Returns**
+
+An AccessControlList object 
+
+*******************
+
+``GET api/tenants/{tenantId}/namespaces/{namespaceId}/subscriptions/{subscriptionId}/accesscontrol``
+--------------------------------------------
+
+Gets the Access Control List for a particular subscriptions
+
+**Parameters**
+
+``tenantId``
+  Unique Id for the tenant. 
+``namespaceId``
+  Unique Id for the namespace. 
+``subscriptionId``
+  Unique Id for the subscription. 
+
+**Returns**
+
+An AccessControlList object 
+
+*******************
+
+``POST api/tenants/{tenantId}/namespaces/{namespaceId}/subscription``
 --------------------------------------------
 
 Create or update a subscription. Only the name and description may be updated. 
@@ -139,6 +190,8 @@ Create or update a subscription. Only the name and description may be updated.
 
 ``tenantId``
   Unique Id for the tenant. 
+``namespaceId``
+  Unique Id for the namespace. 
 
 **Body**
 
@@ -150,29 +203,42 @@ A Subscription object that was created or updated.
 
 *******************
 
-``POST api/tenants/{tenantId}/subscription/{ocsDataStoreRelayNamespace}``
-------------------------------------------------------------
-
-Create or update a subscription with an OCSDataStore destination. Only the name and description may be updated. 
+Updates the default Access Control List for new subscriptions
 
 **Parameters**
 
 ``tenantId``
   Unique Id for the tenant. 
-``ocsDataStoreRelayNamespace``
-  The namespace to be used for the OCSDataStore subscription. 
+``namespaceId``
+  Unique Id for the namespace. 
 
 **Body**
 
-A Subscription object. 
+An AccessControlList object 
 
-**Returns**
+*******************
 
-A Subscription object that was created or updated.  
+``PUT api/tenants/{tenantId}/namespaces/{namespaceId}/subscriptions/{subscriptionId}/accesscontrol``
+--------------------------------------------
 
-*********************
+Updates the Access Control List for a particular subscriptions
 
-``DELETE api/tenants/{tenantId}/subscriptions/{subscriptionId}``
+**Parameters**
+
+``tenantId``
+  Unique Id for the tenant. 
+``namespaceId``
+  Unique Id for the namespace. 
+``subscriptionId``
+  Unique Id for the subscription. 
+
+**Body**
+
+An AccessControlList object 
+
+*******************
+
+``DELETE api/tenants/{tenantId}/namespaces/{namespaceId}/subscriptions/{subscriptionId}``
 -----------------------------------------------------------------
 
 Delete a Subscription. 

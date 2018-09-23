@@ -90,8 +90,8 @@ in the Container definition are interpreted as follows:
 * ``typeversion``: Versioning of SdsTypes is not supported.
 * ``name``: Corresponds to the SdsStream Name field. This is a friendly name for the stream.
 * ``description``: Corresponds to the SdsStream Description field.
-* ``tags``: Corresponds to the SdsStream Tag field. 
-* ``metadata``: Corresponds to the SdsStream Metadata field        
+* ``tags``: Corresponds to the SdsStream Tag object. 
+* ``metadata``: Corresponds to the SdsStream Metadata object.        
 
 
 Data messages
