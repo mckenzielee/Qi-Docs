@@ -1,7 +1,7 @@
 API calls for reading data
 ===========================
 
-Reading and writing data with the Qi Client Libraries is performed through the ``IQiDataService`` interface, which can be accessed with the ``QiService.GetDataService( )`` helper.
+Reading and writing data with the SDS Client Libraries is performed through the ``ISdsDataService`` interface, which can be accessed with the ``SdsService.GetDataService( )`` helper.
 
 
 
@@ -302,7 +302,7 @@ No distinct value is found at the specified index, and an error response is retu
 ``Find Distinct Value``
 ----------------------
 
-Returns a stored event found based on the specified QiSearchMode and index. 
+Returns a stored event found based on the specified SdsSearchMode and index. 
 
 
 **Request**
@@ -325,7 +325,7 @@ Returns a stored event found based on the specified QiSearchMode and index.
 ``string index``
   The index
 ``string mode``
-  The QiSearchMode
+  The SdsSearchMode
 ``string viewId``
   Optional view identifier
 
@@ -343,7 +343,7 @@ For a stream of type Simple the following request,
       FindDistinctValue?index=2017-11-23T13:00:00Z&mode=Next
 
 The request has an index that matches the index of an existing event, but because  
-a QiSearchMode of ``next`` was specified, the response contains the next event in the stream after the 
+a SdsSearchMode of ``next`` was specified, the response contains the next event in the stream after the 
 specified index:
 
 **Response body**
@@ -395,11 +395,11 @@ The next event in the stream is retrieved.
 ::
 
   Task<T> FindDistinctValueAsync<T>(string streamId, string index, 
-          QiSearchMode mode, string viewId = null);
+          SdsSearchMode mode, string viewId = null);
   Task<T> FindDistinctValueAsync<T, T1>(string streamId, Tuple<T1> index, 
-          QiSearchMode mode, string viewId = null);
+          SdsSearchMode mode, string viewId = null);
   Task<T> FindDistinctValueAsync<T, T1, T2>(string streamId, Tuple<T1, T2> index, 
-          QiSearchMode mode, string viewId = null);
+          SdsSearchMode mode, string viewId = null);
 
 
 
@@ -716,8 +716,8 @@ how to filter the data.
   Optional specification of the direction of the request. By default, range requests move forward 
   from startIndex, collecting events after startIndex from the stream. A reversed request will 
   collect events before startIndex from the stream.
-``QiBoundaryType boundaryType``
-  Optional QiBoundaryType specifies the handling of events at or near startIndex
+``SdsBoundaryType boundaryType``
+  Optional SdsBoundaryType specifies the handling of events at or near startIndex
 ``string filter``
   Optional filter expression
 ``string viewId``
@@ -886,28 +886,28 @@ Adding a filter to the request means only events that meet the filter criteria a
       Tuple<T1, T2> startIndex, int count, bool reversed, string viewId = null);
 
   Task<IEnumerable<T>> GetRangeValuesAsync<T>(string streamId, string startIndex, 
-      int count, QiBoundaryType boundaryType, string viewId = null);
+      int count, SdsBoundaryType boundaryType, string viewId = null);
   Task<IEnumerable<T>> GetRangeValuesAsync<T, T1>(string streamId, T1 startIndex, 
-      int count, QiBoundaryType boundaryType, string viewId = null);
+      int count, SdsBoundaryType boundaryType, string viewId = null);
   Task<IEnumerable<T>> GetRangeValuesAsync<T, T1, T2>(string streamId, 
-      Tuple<T1, T2> startIndex, int count, QiBoundaryType boundaryType, string viewId = null);
+      Tuple<T1, T2> startIndex, int count, SdsBoundaryType boundaryType, string viewId = null);
 
   Task<IEnumerable<T>> GetRangeValuesAsync<T>(string streamId, string startIndex, 
-      int skip, int count, bool reversed, QiBoundaryType boundaryType, string viewId = null);
+      int skip, int count, bool reversed, SdsBoundaryType boundaryType, string viewId = null);
   Task<IEnumerable<T>> GetRangeValuesAsync<T, T1>(string streamId, T1 startIndex, 
-      int skip, int count, bool reversed, QiBoundaryType boundaryType, string viewId = null);
+      int skip, int count, bool reversed, SdsBoundaryType boundaryType, string viewId = null);
   Task<IEnumerable<T>> GetRangeValuesAsync<T, T1, T2>(string streamId, Tuple<T1, T2> 
-      startIndex, int skip, int count, bool reversed, QiBoundaryType 
+      startIndex, int skip, int count, bool reversed, SdsBoundaryType 
       boundaryType, string viewId = null);
 
   Task<IEnumerable<T>> GetRangeFilteredValuesAsync<T>(string streamId, string startIndex, 
-      int skip, int count, bool reversed, QiBoundaryType boundaryType, string filter, 
+      int skip, int count, bool reversed, SdsBoundaryType boundaryType, string filter, 
       string viewId = null);
   Task<IEnumerable<T>> GetRangeFilteredValuesAsync<T, T1>(string streamId, T1 startIndex, 
-      int skip, int count, bool reversed, QiBoundaryType boundaryType, string filter, 
+      int skip, int count, bool reversed, SdsBoundaryType boundaryType, string filter, 
       string viewId = null);
   Task<IEnumerable<T>> GetRangeFilteredValuesAsync<T, T1, T2>(string streamId, 
-      Tuple<T1, T2> startIndex, int skip, int count, bool reversed, QiBoundaryType boundaryType, 
+      Tuple<T1, T2> startIndex, int skip, int count, bool reversed, SdsBoundaryType boundaryType, 
       string filter, string viewId = null);
 
 
@@ -1571,12 +1571,12 @@ Notice that not all the values from Streams were included since they are restric
 --------------------
 
 Get Window Values returns a collection of stored events based on specified start and end indexes. 
-For handling events at and near the boundaries of the window, a single QiBoundaryType that applies 
+For handling events at and near the boundaries of the window, a single SdsBoundaryType that applies 
 to both the start and end indexes can be passed with the request, or separate boundary types may 
 be passed for the start and end individually. 
 
 Get Window Values also supports paging for large result sets. Results for paged requests are returned 
-as a QiResultPage.
+as a SdsResultPage.
 
 
 +-------------------+------------------------------+----------------------------------------------------------+
@@ -1629,12 +1629,12 @@ For the first request, specify a null or empty string for the ContinuationToken.
   Index bounding the end of the series of events to return
 ``string count``
   Optional maximum number of events to return
-``QiBoundaryType boundaryType``
-  Optional QiBoundaryType specifies handling of events at or near the start and end indexes
-``QiBoundaryType startBoundaryType``
-  Optional QiBoundaryType specifies the first value in the result in relation to the start index
-``QiBoundaryType endBoundaryType``
-  Optional QiBoundaryType specifies the last value in the result in relation to the end index
+``SdsBoundaryType boundaryType``
+  Optional SdsBoundaryType specifies handling of events at or near the start and end indexes
+``SdsBoundaryType startBoundaryType``
+  Optional SdsBoundaryType specifies the first value in the result in relation to the start index
+``SdsBoundaryType endBoundaryType``
+  Optional SdsBoundaryType specifies the last value in the result in relation to the end index
 ``string filter``
   Optional filter expression
 ``string viewId``
@@ -1842,80 +1842,80 @@ Note that State is not included in the JSON as its value is the default value.
       uple<T1, T2> startIndex, Tuple<T1, T2> endIndex, string viewId = null);
 
   Task<IEnumerable<T>> GetWindowValuesAsync<T>(string streamId, string startIndex, 
-      string endIndex, QiBoundaryType boundaryType, string viewId = null);
+      string endIndex, SdsBoundaryType boundaryType, string viewId = null);
   Task<IEnumerable<T>> GetWindowValuesAsync<T, T1>(string streamId, T1 startIndex, 
-      T1 endIndex, QiBoundaryType boundaryType, string viewId = null);
+      T1 endIndex, SdsBoundaryType boundaryType, string viewId = null);
   Task<IEnumerable<T>> GetWindowValuesAsync<T, T1, T2>(string streamId, 
       Tuple<T1, T2> startIndex, Tuple<T1, T2> endIndex, 
-  QiBoundaryType boundaryType, string viewId = null);
+  SdsBoundaryType boundaryType, string viewId = null);
 
   Task<IEnumerable<T>> GetWindowFilteredValuesAsync<T>(string streamId, 
-      string startIndex, string endIndex, QiBoundaryType boundaryType, 
+      string startIndex, string endIndex, SdsBoundaryType boundaryType, 
       string filter, string viewId = null);
   Task<IEnumerable<T>> GetWindowFilteredValuesAsync<T, T1>(string streamId, 
-      T1 startIndex, T1 endIndex, QiBoundaryType boundaryType, string filter, string viewId = null);
+      T1 startIndex, T1 endIndex, SdsBoundaryType boundaryType, string filter, string viewId = null);
   Task<IEnumerable<T>> GetWindowFilteredValuesAsync<T, T1, T2>(string streamId, 
       Tuple<T1, T2> startIndex, Tuple<T1, T2> endIndex, 
-      QiBoundaryType boundaryType, string filter, string viewId = null);
+      SdsBoundaryType boundaryType, string filter, string viewId = null);
 
   Task<IEnumerable<T>> GetWindowFilteredValuesAsync<T>(string streamId, 
-      string startIndex, QiBoundaryType startBoundaryType, string endIndex, 
-      QiBoundaryType endBoundaryType, string filter, string viewId = null);
+      string startIndex, SdsBoundaryType startBoundaryType, string endIndex, 
+      SdsBoundaryType endBoundaryType, string filter, string viewId = null);
   Task<IEnumerable<T>> GetWindowFilteredValuesAsync<T, T1>(string streamId,
-      T1 startIndex, QiBoundaryType startBoundaryType, 
-      T1 endIndex, QiBoundaryType endBoundaryType, 
+      T1 startIndex, SdsBoundaryType startBoundaryType, 
+      T1 endIndex, SdsBoundaryType endBoundaryType, 
       string filter, string viewId = null);
   Task<IEnumerable<T>> GetWindowFilteredValuesAsync<T, T1, T2>(string streamId, 
-      Tuple<T1, T2> startIndex, QiBoundaryType startBoundaryType, 
-      Tuple<T1, T2> endIndex, QiBoundaryType endBoundaryType, 
+      Tuple<T1, T2> startIndex, SdsBoundaryType startBoundaryType, 
+      Tuple<T1, T2> endIndex, SdsBoundaryType endBoundaryType, 
       string filter, string viewId = null);
 
-  Task<QiResultPage<T>> GetWindowValuesAsync<T>(string streamId, string startIndex,
-      string endIndex, QiBoundaryType boundaryType, int count, 
+  Task<SdsResultPage<T>> GetWindowValuesAsync<T>(string streamId, string startIndex,
+      string endIndex, SdsBoundaryType boundaryType, int count, 
       string continuationToken, string viewId = null);
-  Task<QiResultPage<T>> GetWindowValuesAsync<T, T1>(string streamId, T1 startIndex, 
-      T1 endIndex, QiBoundaryType boundaryType, int count, 
+  Task<SdsResultPage<T>> GetWindowValuesAsync<T, T1>(string streamId, T1 startIndex, 
+      T1 endIndex, SdsBoundaryType boundaryType, int count, 
       string continuationToken, string viewId = null);
-  Task<QiResultPage<T>> GetWindowValuesAsync<T, T1, T2>(string streamId, 
+  Task<SdsResultPage<T>> GetWindowValuesAsync<T, T1, T2>(string streamId, 
       Tuple<T1, T2> startIndex, Tuple<T1, T2> endIndex, 
-      QiBoundaryType boundaryType, int count, string continuationToken, 
+      SdsBoundaryType boundaryType, int count, string continuationToken, 
       string viewId = null);
 
-  Task<QiResultPage<T>> GetWindowFilteredValuesAsync<T>(string streamId, 
-      string startIndex, string endIndex, QiBoundaryType boundaryType, 
+  Task<SdsResultPage<T>> GetWindowFilteredValuesAsync<T>(string streamId, 
+      string startIndex, string endIndex, SdsBoundaryType boundaryType, 
       string filter, int count, string continuationToken, string viewId = null);
-  Task<QiResultPage<T>> GetWindowFilteredValuesAsync<T, T1>(string streamId, 
-      T1 startIndex, T1 endIndex, QiBoundaryType boundaryType, string filter, 
+  Task<SdsResultPage<T>> GetWindowFilteredValuesAsync<T, T1>(string streamId, 
+      T1 startIndex, T1 endIndex, SdsBoundaryType boundaryType, string filter, 
       int count, string continuationToken, string viewId = null);
-  Task<QiResultPage<T>> GetWindowFilteredValuesAsync<T, T1, T2>(string streamId, 
+  Task<SdsResultPage<T>> GetWindowFilteredValuesAsync<T, T1, T2>(string streamId, 
       Tuple<T1, T2> startIndex, Tuple<T1, T2> endIndex, 
-      QiBoundaryType boundaryType, string filter, int count, 
+      SdsBoundaryType boundaryType, string filter, int count, 
       string continuationToken, string viewId = null);
 
-  Task<QiResultPage<T>> GetWindowValuesAsync<T>(string streamId, 
-      string startIndex, QiBoundaryType startBoundaryType, 
-      string endIndex, QiBoundaryType endBoundaryType, 
+  Task<SdsResultPage<T>> GetWindowValuesAsync<T>(string streamId, 
+      string startIndex, SdsBoundaryType startBoundaryType, 
+      string endIndex, SdsBoundaryType endBoundaryType, 
       int count, string continuationToken, string viewId = null);
-  Task<QiResultPage<T>> GetWindowValuesAsync<T, T1>(string streamId, 
-      T1 startIndex, QiBoundaryType startBoundaryType, 
-      T1 endIndex, QiBoundaryType endBoundaryType, 
+  Task<SdsResultPage<T>> GetWindowValuesAsync<T, T1>(string streamId, 
+      T1 startIndex, SdsBoundaryType startBoundaryType, 
+      T1 endIndex, SdsBoundaryType endBoundaryType, 
       int count, string continuationToken, string viewId = null);
-  Task<QiResultPage<T>> GetWindowValuesAsync<T, T1, T2>(string streamId, 
-      Tuple<T1, T2> startIndex, QiBoundaryType startBoundaryType, 
-      Tuple<T1, T2> endIndex, QiBoundaryType endBoundaryType, 
+  Task<SdsResultPage<T>> GetWindowValuesAsync<T, T1, T2>(string streamId, 
+      Tuple<T1, T2> startIndex, SdsBoundaryType startBoundaryType, 
+      Tuple<T1, T2> endIndex, SdsBoundaryType endBoundaryType, 
       int count, string continuationToken, string viewId = null);
 
-  Task<QiResultPage<T>> GetWindowFilteredValuesAsync<T>(string streamId, 
-      string startIndex, QiBoundaryType startBoundaryType, 
-      string endIndex, QiBoundaryType endBoundaryType, 
+  Task<SdsResultPage<T>> GetWindowFilteredValuesAsync<T>(string streamId, 
+      string startIndex, SdsBoundaryType startBoundaryType, 
+      string endIndex, SdsBoundaryType endBoundaryType, 
       string filter, int count, string continuationToken, string viewId = null);
-  Task<QiResultPage<T>> GetWindowFilteredValuesAsync<T, T1>(string streamId, 
-      T1 startIndex, QiBoundaryType startBoundaryType, 
-      T1 endIndex, QiBoundaryType endBoundaryType, 
+  Task<SdsResultPage<T>> GetWindowFilteredValuesAsync<T, T1>(string streamId, 
+      T1 startIndex, SdsBoundaryType startBoundaryType, 
+      T1 endIndex, SdsBoundaryType endBoundaryType, 
       string filter, int count, string continuationToken, string viewId = null);
-  Task<QiResultPage<T>> GetWindowFilteredValuesAsync<T, T1, T2>(string streamId, 
-      Tuple<T1, T2> startIndex, QiBoundaryType startBoundaryType, 
-      Tuple<T1, T2> endIndex, QiBoundaryType endBoundaryType, 
+  Task<SdsResultPage<T>> GetWindowFilteredValuesAsync<T, T1, T2>(string streamId, 
+      Tuple<T1, T2> startIndex, SdsBoundaryType startBoundaryType, 
+      Tuple<T1, T2> endIndex, SdsBoundaryType endBoundaryType, 
       string filter, int count, string continuationToken, string viewId = null);
 
 
@@ -1937,7 +1937,7 @@ support GetIntervals requests. Strings are an example of indexes that cannot be 
 Get Intervals method does not support compound indexes. Interpolating between two indexes 
 that consist of multiple properties is not defined and results in non-determinant behavior.
 
-Results are returned as a collection of QiIntervals. Each QiInterval has a start, end, and collection of 
+Results are returned as a collection of SdsIntervals. Each SdsInterval has a start, end, and collection of 
 summary values.
 
 +-------------------+------------------------------+----------------------------------------------------------+
@@ -1947,14 +1947,14 @@ summary values.
 +-------------------+------------------------------+----------------------------------------------------------+
 | End               | T                            | The end of the interval                                  |
 +-------------------+------------------------------+----------------------------------------------------------+
-| Summaries         | IDictionary<QiSummaryType,   | The summary values for the interval, keyed by            |
+| Summaries         | IDictionary<SdsSummaryType,   | The summary values for the interval, keyed by            |
 |                   | IDictionary<string, object>  | summary type. The nested dictionary contains             |
 |                   | Summaries                    | property name keys and summary calculation result        |
 |                   |                              | values.                                                  |
 +-------------------+------------------------------+----------------------------------------------------------+
 
 
-Summary values supported by QiSummaryType enum:
+Summary values supported by SdsSummaryType enum:
 
 +----------------------------------------------------------------+------------------------------+
 | Summary                                                        | Enumeration value            | 
@@ -2015,7 +2015,7 @@ Summary values supported by QiSummaryType enum:
 
 **Response**
 
-  The response includes a status code and a response body containing a serialized collection of QiIntervals.
+  The response includes a status code and a response body containing a serialized collection of SdsIntervals.
   
 For a stream of type Simple, the following requests calculates two summary intervals between the first 
 and last events: 
@@ -2140,25 +2140,25 @@ and last events:
 
 ::
 
-  Task<IEnumerable<QiInterval<T>>> GetIntervalsAsync<T>(string streamId, string 
+  Task<IEnumerable<SdsInterval<T>>> GetIntervalsAsync<T>(string streamId, string 
       startIndex, string endIndex, int count, string viewId = null);
        
-  Task<IEnumerable<QiInterval<T>>> GetIntervalsAsync<T, T1>(string streamId, T1 
+  Task<IEnumerable<SdsInterval<T>>> GetIntervalsAsync<T, T1>(string streamId, T1 
       startIndex, T1 endIndex, int count, string viewId = null);
         
-  Task<IEnumerable<QiInterval<T>>> GetIntervalsAsync<T, T1, T2>(string streamId, 
+  Task<IEnumerable<SdsInterval<T>>> GetIntervalsAsync<T, T1, T2>(string streamId, 
       Tuple<T1, T2> startIndex, Tuple<T1, T2> endIndex, int count, 
       string viewId = null);
 
-  Task<IEnumerable<QiInterval<T>>> GetFilteredIntervalsAsync<T>(string streamId, 
+  Task<IEnumerable<SdsInterval<T>>> GetFilteredIntervalsAsync<T>(string streamId, 
       string startIndex, string endIndex, int count, string filter, 
       string viewId = null);
         
-  Task<IEnumerable<QiInterval<T>>> GetFilteredIntervalsAsync<T, T1>(string streamId, 
+  Task<IEnumerable<SdsInterval<T>>> GetFilteredIntervalsAsync<T, T1>(string streamId, 
       T1 startIndex, T1 endIndex, int count, string filter, 
       string viewId = null);
         
-  Task<IEnumerable<QiInterval<T>>> GetFilteredIntervalsAsync<T, T1, T2>(string 
+  Task<IEnumerable<SdsInterval<T>>> GetFilteredIntervalsAsync<T, T1, T2>(string 
       streamId, Tuple<T1, T2> startIndex, Tuple<T1, T2> endIndex, int count, 
       string filter, string viewId = null);
 
